@@ -1,6 +1,6 @@
 #%RAML 0.8
 ---
-title: API Resource Example
+title: API AMT Project_1
 baseUri: https://localhost/api/{version}
 version: v1
 protocols: [HTTPS]
@@ -9,20 +9,20 @@ mediaType: application/json
 traits:
   - private: !include _traits/private.raml
 
-/myResource:
-  description: This is my resource.
+/Facts:
+  description: This is a Facts.
   post:
-    description: Create a resource. More text is only rendered in the details view of the method.
+    description: Create a fact. More text is only rendered in the details view of the method.
     body:
       application/json:
         example: |
-          { "name" : "myResource" }
+          { "name" : "Fact" }
     responses:
       201:
         body:
           application/json:
             example: |
-              { "id" : 1, "name" : "myResource" }
+              { "id" : 1, "name" : "Fact" }
     headers:
       Authorization:
         description: |
@@ -31,82 +31,42 @@ traits:
           Note that you can also add `<private>` blocks in here.
           </private>
 
-  /{myResourceId}:
+  /{FactId}:
     get:
-      description: Retrieve a resource.
+      description: Retrieve a fact.
       responses:
         200:
           body:
             application/json:
               example: |
-                { "id" : 1, "name" : "myResource" }
+                { "id" : 1, "name" : "Fact" }
         404:
-          description: The resource was not found.
-    delete:
+          description: The fact was not found.
+    put:
+		description: Update a fact
+	delete:
       is: [private]
-      description: Delete a resource.
+      description: Delete a fact.
 
-/adminResource:
-  is: [private]
-  description: This is a private resource.
-  get:
-    description: Get secret message.
-    responses:
-      200:
-        body:
-          application/json:
-            example: |
-              {"secret" : "message"}
-
-/books:
-  get:
-    queryParameters:
-      author:
-      publicationYear:
-      rating:
-      isbn:
-  /{bookTitle}:
+/Observations:
+  description: This is the list of available observations
+/Sensors:
+  description: This is the list of available sensors.
+  /{SensorId}:
     get:
-      queryParameters:
-        author:
-          displayName: Author
-          type: string
-          description: An author's full name
-          example: Mary Roach
-          required: false
-        publicationYear:
-          displayName: Pub Year
-          type: number
-          description: The year released for the first time in the US
-          example: 1984
-          required: false
-        rating:
-          displayName: Rating
-          type: number
-          description: Average rating (1-5) submitted by users
-          example: 3.14
-          required: false
-        isbn:
-          displayName: ISBN
-          type: string
-          minLength: 10
-          example: 0321736079?
-      description: Retrieve a specific book title
+      description: Retrieve a sensor.
       responses:
         200:
           body:
             application/json:
               example: |
-                {
-                  "data": {
-                    "id": "SbBGk",
-                    "title": "Stiff: The Curious Lives of Human Cadavers",
-                    "description": null,
-                    "datetime": 1341533193,
-                    "genre": "science",
-                    "author": "Mary Roach",
-                    "link": "http://e-bookmobile.com/books/Stiff",
-                  },
-                  "success": true,
-                  "status": 200
-                }
+                { "id" : 1, "name" : "SensorName" }
+        404:
+          description: The sensor was not found.
+    post:
+      description: Create a sensor
+  put:
+    description: Modify an existing sensor
+  delete:
+      is: [private]
+      description: Delete a sensor.
