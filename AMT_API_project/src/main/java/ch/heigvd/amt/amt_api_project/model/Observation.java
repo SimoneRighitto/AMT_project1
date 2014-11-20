@@ -20,6 +20,38 @@ public class Observation {
 
     public Observation() {
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public long getSensorID() {
+        return sensorID;
+    }
+
+    public void setSensorID(long sensorID) {
+        this.sensorID = sensorID;
+    }
     
     
 }
