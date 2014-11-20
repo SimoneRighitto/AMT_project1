@@ -3,13 +3,13 @@
  * Created: 20-nov-2014
  */
 
-package ch.heigvd.amt.amt_api_project.model;
+package ch.heigvd.amt.amt_api_project.dto;
 
 /**
  *
  * @author Simone Righitto
  */
-public class Sensor {
+public class SensorDTO {
 
     private long id;
     private String name;
@@ -18,7 +18,7 @@ public class Sensor {
     private String visibility;
     private long organizationID;
 
-    public Sensor() {
+    public SensorDTO() {
     }
 
     public long getId() {

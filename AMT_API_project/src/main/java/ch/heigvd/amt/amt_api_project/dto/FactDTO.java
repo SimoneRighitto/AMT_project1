@@ -3,22 +3,22 @@
  * Created: 20-nov-2014
  */
 
-package ch.heigvd.amt.amt_api_project.model;
+package ch.heigvd.amt.amt_api_project.dto;
+
 
 /**
  *
  * @author Simone Righitto
  */
-public class Sensor {
+public class FactDTO {
 
-    private long id;
-    private String name;
-    private String description;
+   private long id;
+    private String information;
     private String type;
     private String visibility;
     private long organizationID;
 
-    public Sensor() {
+    public FactDTO() {
     }
 
     public long getId() {
@@ -29,20 +29,12 @@ public class Sensor {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getInformation() {
+        return information;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setInformation(String information) {
+        this.information = information;
     }
 
     public String getType() {
@@ -68,7 +60,7 @@ public class Sensor {
     public void setOrganizationID(long organizationID) {
         this.organizationID = organizationID;
     }
-    
-    
+
+   
     
 }

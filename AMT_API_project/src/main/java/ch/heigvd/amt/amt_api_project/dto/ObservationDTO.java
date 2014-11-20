@@ -1,0 +1,56 @@
+/*
+ * Developped for study purposes at Heig-VD.ch
+ * Created: 20-nov-2014
+ */
+
+package ch.heigvd.amt.amt_api_project.dto;
+import java.util.Date;
+
+/**
+ *
+ * @author Simone Righitto
+ */
+public class ObservationDTO {
+
+    private long id;
+    private Date time;
+    private double value;
+    private long sensorID;
+
+    public ObservationDTO() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public long getSensorID() {
+        return sensorID;
+    }
+
+    public void setSensorID(long sensorID) {
+        this.sensorID = sensorID;
+    }
+    
+    
+}

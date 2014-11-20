@@ -21,6 +21,16 @@ public class User {
     public User() {
     }
 
+    public User(long id, String name, String password, String email, long organizationID) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.organizationID = organizationID;
+    }
+    
+    
+
     public long getId() {
         return id;
     }
