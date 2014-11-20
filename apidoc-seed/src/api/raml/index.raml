@@ -19,20 +19,20 @@ traits:
         body:
           application/json:
             example: |
-              [{"id" : 1, "name" : "John", "email" : "john@mail.com", "organisationID" = 4},
-              {"id" : 2, "name" : "Eric", "email" : "eric@mail.com", "organisationID" = 2}]
+              [{"id" : 1, "name" : "John", "email" : "john@mail.com", "organisationID" : 4},
+              {"id" : 2, "name" : "Eric", "email" : "eric@mail.com", "organisationID" : 2}]
   post:
     description: Create a new user.
     body:
       application/json:
         example: |
-          {"name" : "John", "password" : "1234", "email" : "john@mail.com", "organisationID" = 4}
+          {"name" : "John", "password" : "1234", "email" : "john@mail.com", "organisationID" : 4}
     responses:
       201:
         body:
           application/json:
             example: |
-              {"id" : 1, "name" : "John", "password" : "1234", "email" : "john@mail.com", "organisationID" = 4}
+              {"id" : 1, "name" : "John", "password" : "1234", "email" : "john@mail.com", "organisationID" : 4}
   /{userID}:
     get:
       description: Retrieve a user.
@@ -41,10 +41,11 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 1, "name" : "John", "email" : "john@mail.com", "organisationID" = 4}
+                {"id" : 1, "name" : "John", "email" : "john@mail.com", "organisationID" : 4}
         404:
           description: The user was not found.
     put:
+      is: [private]
       description: Update user informations.
       body:
         application/json:
@@ -55,7 +56,7 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 1, "name" : "NewName", "password" : "newPassword", "email" : "john@mail.com", "organisationID" = 4}
+                {"id" : 1, "name" : "John", "password" : "newPassword", "email" : "john@mail.com", "organisationID" : 4}
     delete:
       is: [private]
       description: |
@@ -75,20 +76,20 @@ traits:
         body:
           application/json:
             example: |
-              [{"id" : 1, "name" : "Heig-vd", "contactUserID" = 3},
-              {"id" : 2, "name" : "iict", "contactUserID" = 1}]
+              [{"id" : 1, "name" : "Heig-vd", "contactUserID" : 3},
+              {"id" : 2, "name" : "iict", "contactUserID" : 1}]
   post:
     description: Create a new organisation.
     body:
       application/json:
         example: |
-          {"name" : "fbi", "contactUserID" = 4}
+          {"name" : "fbi", contactUser : name" : "John", "password" : "password", "email" : "john@mail.com"}
     responses:
       201:
         body:
           application/json:
             example: |
-              {"id" : 3, "fbi", "contactUserID" = 4}
+              {"id" : 3, "fbi", "contactUserID" : 4}
   /{organisationID}:
     get:
       description: Retrieve an organisation.
@@ -97,10 +98,11 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 1, "name" : "Heig-vd", "contactUserID" = 3}
+                {"id" : 1, "name" : "Heig-vd", "contactUserID" : 3}
         404:
           description: The organisation was not found.
     put:
+      is: [private]
       description: Update organisation informations.
       body:
         application/json:
@@ -111,7 +113,7 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 1, "name" : "NewName", "contactUserID" = 3}
+                {"id" : 1, "name" : "NewName", "contactUserID" : 3}
     delete:
       is: [private]
       description: |
@@ -128,13 +130,13 @@ traits:
     body:
       application/json:
         example: |
-          {"time" : "2014-11-05T13:15:30Z", "value" : 4324}
+          {"time" : "2014-11-05T13:15:30Z", "value" : 4324, "sensorID" : 32}
     responses:
       201:
         body:
           application/json:
             example: |
-              {"id" : 12, "time" : "2014-11-05T13:15:30Z", "value" : 4324, "sensorID" = 32}
+              {"id" : 12, "time" : "2014-11-05T13:15:30Z", "value" : 4324, "sensorID" : 32}
   /{observationID}:
     get:
       description: Retrieve an observation.
@@ -143,39 +145,33 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 1, "name" : "Fact"}
+                {"id" : 12, "time" : "2014-11-05T13:15:30Z", "value" : 4324, "sensorID" : 32}
         404:
           description: The observation was not found.
-    put:
-      description: Update an observation"
-      body:
-        application/json:
-          example: |
-            {"value" : 5555}
-      responses:
-        201:
-          body:
-            application/json:
-              example: |
-                {"id" : 12, "time" : "2014-11-05T13:15:30Z", "value" : 5555, "sensorID" = 32}
-    delete:
-        is: [private]
-        description: Delete an observation.
 
 /facts:
   description: This is the list of facts.
+  get:
+    description: Retrieve all facts.
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [{"id" : 20, "information" : "The average temperature on Yverdon for 2013 is 30°C", "type" : "climat", "visibility" : "public"},
+              {"id" : 21, "information" : "The average number of cars on Yverdon for 2013 is 34849", "type" : "trafic", "visibility" : "public"}]
   post:
     description: Create a fact.
     body:
       application/json:
         example: |
-          {"information" : "The average temperature on Yverdon for 2013 is 30°C", "type" : "climat", "visibility" = "public"}
+          {"information" : "The average temperature on Yverdon for 2013 is 30°C", "type" : "climat", "visibility" : "public"}
     responses:
       201:
         body:
           application/json:
             example: |
-              {"id" : 20, "information" : "The average temperature on Yverdon for 2013 is 30°C", "type" : "climat", "visibility" = "public"}
+              {"id" : 20, "information" : "The average temperature on Yverdon for 2013 is 30°C", "type" : "climat", "visibility" : "public"}
   /{factID}:
     get:
       description: Retrieve a fact.
@@ -184,10 +180,11 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 20, "information" : "The average temperature on Yverdon for 2013 is 30°C", "type" : "climat", "visibility" = "public"}
+                {"id" : 20, "information" : "The average temperature on Yverdon for 2013 is 30°C", "type" : "climat", "visibility" : "public"}
         404:
           description: The fact was not found.
     put:
+      is: [private]
       description: Update a fact.
       body:
         application/json:
@@ -198,7 +195,7 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 20, "information" : "The average temperature on Yverdon for 2013 is 20°C", "type" : "climat", "visibility" = "public"}
+                {"id" : 20, "information" : "The average temperature on Yverdon for 2013 is 20°C", "type" : "climat", "visibility" : "public"}
     delete:
         is: [private]
         description: Delete a fact.
@@ -210,13 +207,13 @@ traits:
     body:
       application/json:
         example: |
-          {name" : "greatSensor", "description" : "This is the temperature sensor of Heig-vd's Cafeteria", "type" : "thermometer", "visibility" = "public"}
+          {name" : "greatSensor", "description" : "This is the temperature sensor of Heig-vd's Cafeteria", "type" : "thermometer", "visibility" : "public"}
     responses:
       201:
         body:
           application/json:
             example: |
-              {"id" : 5, "name" : "greatSensor", "description" : "This is the temperature sensor of Heig-vd's Cafeteria", "type" : "thermometer", "visibility" = "public"}
+              {"id" : 5, "name" : "greatSensor", "description" : "This is the temperature sensor of Heig-vd's Cafeteria", "type" : "thermometer", "visibility" : "public"}
   /{sensorID}:
     get:
       description: Retrieve a sensor.
@@ -225,10 +222,11 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 5, "name" : "greatSensor", "description" : "This is the temperature sensor of Heig-vd's Cafeteria", "type" : "thermometer", "visibility" = "public"}
+                {"id" : 5, "name" : "greatSensor", "description" : "This is the temperature sensor of Heig-vd's Cafeteria", "type" : "thermometer", "visibility" : "public"}
         404:
           description: The sensor was not found.
     put:
+      is: [private]
       description: Update a sensor.
       body:
         application/json:
@@ -239,7 +237,7 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 5, "name" : "newName", "description" : "This is the temperature sensor of Heig-vd's Cafeteria", "type" : "thermometer", "visibility" = "public"}
+                {"id" : 5, "name" : "newName", "description" : "This is the temperature sensor of Heig-vd's Cafeteria", "type" : "thermometer", "visibility" : "public"}
     delete:
         is: [private]
         description: Delete a sensor.
