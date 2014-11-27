@@ -5,16 +5,25 @@
 
 package ch.heigvd.amt.amt_api_project.model;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 /**
  *
  * @author Simone Righitto
  */
-public class Fact {
 
+@Entity
+public class Fact implements Serializable {
+
+    @Id
    private long id;
     private String information;
     private String type;
     private String visibility;
+    @ManyToOne
     private Organization organizationOwner;
 
     public Fact() {

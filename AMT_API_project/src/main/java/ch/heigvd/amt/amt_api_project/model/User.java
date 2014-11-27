@@ -5,16 +5,25 @@
 
 package ch.heigvd.amt.amt_api_project.model;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 /**
  *
  * @author Simone Righitto
  */
-public class User {
 
+@Entity
+public class User implements Serializable {
+    
+    @Id
     private long id;
     private String name;
     private String password;
     private String email;
+    @ManyToOne
     private Organization organization;
     private boolean isContact;
     

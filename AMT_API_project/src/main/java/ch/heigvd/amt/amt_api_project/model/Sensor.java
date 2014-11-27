@@ -5,17 +5,26 @@
 
 package ch.heigvd.amt.amt_api_project.model;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 /**
  *
  * @author Simone Righitto
  */
-public class Sensor {
 
+@Entity
+public class Sensor implements Serializable {
+
+    @Id
     private long id;
     private String name;
     private String description;
     private String type;
     private String visibility;
+    @ManyToOne
     private Organization organizationOwner;
 
     public Sensor() {
