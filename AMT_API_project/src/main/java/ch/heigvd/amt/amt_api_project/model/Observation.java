@@ -16,16 +16,17 @@ public class Observation {
     private long id;
     private Date time;
     private double value;
-    private long sensorID;
+    private Sensor sourceSensor;
+    
 
     public Observation() {
     }
-    
-    public Observation(long id, Date time, double value, long sensorID) {
+
+    public Observation(long id, Date time, double value, Sensor sourceSensor) {
         this.id = id;
         this.time = time;
         this.value = value;
-        this.sensorID = sensorID;
+        this.sourceSensor = sourceSensor;
     }
 
     public long getId() {
@@ -52,13 +53,14 @@ public class Observation {
         this.value = value;
     }
 
-    public long getSensorID() {
-        return sensorID;
+    public Sensor getSourceSensor() {
+        return sourceSensor;
     }
 
-    public void setSensorID(long sensorID) {
-        this.sensorID = sensorID;
+    public void setSourceSensor(Sensor sourceSensor) {
+        this.sourceSensor = sourceSensor;
     }
     
+   
     
 }

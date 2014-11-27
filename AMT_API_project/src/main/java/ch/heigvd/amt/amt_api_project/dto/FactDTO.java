@@ -5,6 +5,7 @@
 
 package ch.heigvd.amt.amt_api_project.dto;
 
+import ch.heigvd.amt.amt_api_project.model.Organization;
 
 /**
  *
@@ -16,10 +17,12 @@ public class FactDTO {
     private String information;
     private String type;
     private String visibility;
-    private long organizationID;
+    private Organization organizationOwner;
 
     public FactDTO() {
     }
+
+
 
     public long getId() {
         return id;
@@ -53,13 +56,15 @@ public class FactDTO {
         this.visibility = visibility;
     }
 
-    public long getOrganizationID() {
-        return organizationID;
+    public Organization getOrganizationOwner() {
+        return organizationOwner;
     }
 
-    public void setOrganizationID(long organizationID) {
-        this.organizationID = organizationID;
+    public void setOrganizationOwner(Organization organizationOwner) {
+        this.organizationOwner = organizationOwner;
     }
+    
+   
 
    
     

@@ -16,21 +16,20 @@ public class Sensor {
     private String description;
     private String type;
     private String visibility;
-    private long organizationID;
+    private Organization organizationOwner;
 
     public Sensor() {
     }
 
-    public Sensor(long id, String name, String description, String type, String visibility, long organizationID) {
+    public Sensor(long id, String name, String description, String type, String visibility, Organization organizationOwner) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;
         this.visibility = visibility;
-        this.organizationID = organizationID;
+        this.organizationOwner = organizationOwner;
     }
 
-    
     public long getId() {
         return id;
     }
@@ -71,14 +70,14 @@ public class Sensor {
         this.visibility = visibility;
     }
 
-    public long getOrganizationID() {
-        return organizationID;
+    public Organization getOrganizationOwner() {
+        return organizationOwner;
     }
 
-    public void setOrganizationID(long organizationID) {
-        this.organizationID = organizationID;
+    public void setOrganizationOwner(Organization organizationOwner) {
+        this.organizationOwner = organizationOwner;
     }
-    
-    
+
+   
     
 }

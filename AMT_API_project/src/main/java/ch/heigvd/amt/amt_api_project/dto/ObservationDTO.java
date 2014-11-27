@@ -4,6 +4,8 @@
  */
 
 package ch.heigvd.amt.amt_api_project.dto;
+
+import ch.heigvd.amt.amt_api_project.model.Sensor;
 import java.util.Date;
 
 /**
@@ -15,10 +17,12 @@ public class ObservationDTO {
     private long id;
     private Date time;
     private double value;
-    private long sensorID;
+    private Sensor sourceSensor;
+    
 
     public ObservationDTO() {
     }
+
 
     public long getId() {
         return id;
@@ -44,13 +48,14 @@ public class ObservationDTO {
         this.value = value;
     }
 
-    public long getSensorID() {
-        return sensorID;
+    public Sensor getSourceSensor() {
+        return sourceSensor;
     }
 
-    public void setSensorID(long sensorID) {
-        this.sensorID = sensorID;
+    public void setSourceSensor(Sensor sourceSensor) {
+        this.sourceSensor = sourceSensor;
     }
     
+   
     
 }

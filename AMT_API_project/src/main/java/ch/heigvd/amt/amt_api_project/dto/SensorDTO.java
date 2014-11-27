@@ -5,6 +5,8 @@
 
 package ch.heigvd.amt.amt_api_project.dto;
 
+import ch.heigvd.amt.amt_api_project.model.Organization;
+
 /**
  *
  * @author Simone Righitto
@@ -16,10 +18,12 @@ public class SensorDTO {
     private String description;
     private String type;
     private String visibility;
-    private long organizationID;
+    private Organization organizationOwner;
 
     public SensorDTO() {
     }
+
+
 
     public long getId() {
         return id;
@@ -61,14 +65,14 @@ public class SensorDTO {
         this.visibility = visibility;
     }
 
-    public long getOrganizationID() {
-        return organizationID;
+    public Organization getOrganizationOwner() {
+        return organizationOwner;
     }
 
-    public void setOrganizationID(long organizationID) {
-        this.organizationID = organizationID;
+    public void setOrganizationOwner(Organization organizationOwner) {
+        this.organizationOwner = organizationOwner;
     }
-    
-    
+
+   
     
 }

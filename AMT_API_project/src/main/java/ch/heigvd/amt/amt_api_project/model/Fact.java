@@ -15,17 +15,17 @@ public class Fact {
     private String information;
     private String type;
     private String visibility;
-    private long organizationID;
+    private Organization organizationOwner;
 
     public Fact() {
     }
-    
-    public Fact(long id, String information, String type, String visibility, long organizationID) {
+
+    public Fact(long id, String information, String type, String visibility, Organization organizationOwner) {
         this.id = id;
         this.information = information;
         this.type = type;
         this.visibility = visibility;
-        this.organizationID = organizationID;
+        this.organizationOwner = organizationOwner;
     }
 
     public long getId() {
@@ -60,13 +60,15 @@ public class Fact {
         this.visibility = visibility;
     }
 
-    public long getOrganizationID() {
-        return organizationID;
+    public Organization getOrganizationOwner() {
+        return organizationOwner;
     }
 
-    public void setOrganizationID(long organizationID) {
-        this.organizationID = organizationID;
+    public void setOrganizationOwner(Organization organizationOwner) {
+        this.organizationOwner = organizationOwner;
     }
+    
+   
 
    
     

@@ -5,6 +5,8 @@
 
 package ch.heigvd.amt.amt_api_project.model;
 
+import java.util.List;
+
 /**
  *
  * @author Simone Righitto
@@ -13,18 +15,22 @@ public class Organization {
 
     private long id;
     private String name;
-    private long contactUserID;
+    private List<Sensor> sensors;
+    private List<User> users;
+    private User contatUser;
+    private List<Fact> facts;
 
     public Organization() {
     }
 
-    public Organization(long id, String name, long contactUserID) {
+    public Organization(long id, String name, List<Sensor> sensors, List<User> users, User contatUser, List<Fact> facts) {
         this.id = id;
         this.name = name;
-        this.contactUserID = contactUserID;
+        this.sensors = sensors;
+        this.users = users;
+        this.contatUser = contatUser;
+        this.facts = facts;
     }
-    
-    
 
     public long getId() {
         return id;
@@ -42,15 +48,42 @@ public class Organization {
         this.name = name;
     }
 
-    public long getContactUserID() {
-        return contactUserID;
+    public List<Sensor> getSensors() {
+        return sensors;
     }
 
-    public void setContactUserID(long contactUserID) {
-        this.contactUserID = contactUserID;
+    public void setSensors(List<Sensor> sensors) {
+        this.sensors = sensors;
     }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public User getContatUser() {
+        return contatUser;
+    }
+
+    public void setContatUser(User contatUser) {
+        this.contatUser = contatUser;
+    }
+
+    public List<Fact> getFacts() {
+        return facts;
+    }
+
+    public void setFacts(List<Fact> facts) {
+        this.facts = facts;
+    }
+
 
     
+    
+
    
     
 }

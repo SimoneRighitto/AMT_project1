@@ -15,21 +15,21 @@ public class User {
     private String name;
     private String password;
     private String email;
-    private long organizationID;
+    private Organization organization;
+    private boolean isContact;
     
 
     public User() {
     }
 
-    public User(long id, String name, String password, String email, long organizationID) {
+    public User(long id, String name, String password, String email, Organization organization, boolean isContact) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
-        this.organizationID = organizationID;
+        this.organization = organization;
+        this.isContact = isContact;
     }
-    
-    
 
     public long getId() {
         return id;
@@ -63,13 +63,23 @@ public class User {
         this.email = email;
     }
 
-    public long getOrganizationID() {
-        return organizationID;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setOrganizationID(long organizationID) {
-        this.organizationID = organizationID;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
+
+    public boolean isIsContact() {
+        return isContact;
+    }
+
+    public void setIsContact(boolean isContact) {
+        this.isContact = isContact;
+    }
+
+    
 
    
 }

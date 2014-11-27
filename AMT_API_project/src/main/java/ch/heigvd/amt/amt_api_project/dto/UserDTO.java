@@ -5,22 +5,24 @@
 
 package ch.heigvd.amt.amt_api_project.dto;
 
+import ch.heigvd.amt.amt_api_project.model.Organization;
+
 /**
  *
  * @author Simone Righitto
  */
-
-//The UserDTO is used to restrain access on the user password attrubute (that is disponible on the user model).
 public class UserDTO {
 
     private long id;
     private String name;
     private String email;
-    private long organizationID;
+    private Organization organization;
+    private boolean isContact;
     
 
     public UserDTO() {
     }
+
 
     public long getId() {
         return id;
@@ -38,6 +40,7 @@ public class UserDTO {
         this.name = name;
     }
 
+
     public String getEmail() {
         return email;
     }
@@ -46,11 +49,24 @@ public class UserDTO {
         this.email = email;
     }
 
-    public long getOrganizationID() {
-        return organizationID;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setOrganizationID(long organizationID) {
-        this.organizationID = organizationID;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
+
+    public boolean isIsContact() {
+        return isContact;
+    }
+
+    public void setIsContact(boolean isContact) {
+        this.isContact = isContact;
+    }
+
+    
+
+   
 }
+
