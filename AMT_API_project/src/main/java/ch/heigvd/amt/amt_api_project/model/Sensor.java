@@ -21,6 +21,16 @@ public class Sensor {
     public Sensor() {
     }
 
+    public Sensor(long id, String name, String description, String type, String visibility, long organizationID) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.type = type;
+        this.visibility = visibility;
+        this.organizationID = organizationID;
+    }
+
+    
     public long getId() {
         return id;
     }

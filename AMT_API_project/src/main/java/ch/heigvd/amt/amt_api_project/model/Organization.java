@@ -18,6 +18,14 @@ public class Organization {
     public Organization() {
     }
 
+    public Organization(long id, String name, long contactUserID) {
+        this.id = id;
+        this.name = name;
+        this.contactUserID = contactUserID;
+    }
+    
+    
+
     public long getId() {
         return id;
     }
