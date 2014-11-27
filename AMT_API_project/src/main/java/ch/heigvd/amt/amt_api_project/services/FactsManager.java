@@ -23,7 +23,7 @@ public class FactsManager implements FactsManagerLocal {
 
     public FactsManager() {
 
-        facts.put(1L, new Fact(1L, "info", "type", "visibility", 11L));
+        //facts.put(1L, new Fact(1L, "info", "type", "visibility", 11L));
 
     }
 

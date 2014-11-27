@@ -22,9 +22,9 @@ public class SensorsManager implements SensorsManagerLocal {
 
     public SensorsManager() {
 
-        organizations.put(1L, new Sensor(1L, "sensor1", "roof", "clima", "public", 2L));
-        organizations.put(1L, new Sensor(2L, "sensor2", "window", "clima", "public", 2L));
-        organizations.put(1L, new Sensor(3L, "sensor3", "1st floor", "clima", "public", 2L));
+//        organizations.put(1L, new Sensor(1L, "sensor1", "roof", "clima", "public", 2L));
+//        organizations.put(1L, new Sensor(2L, "sensor2", "window", "clima", "public", 2L));
+//        organizations.put(1L, new Sensor(3L, "sensor3", "1st floor", "clima", "public", 2L));
 
     }
 

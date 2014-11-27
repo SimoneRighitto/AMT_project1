@@ -22,9 +22,9 @@ public class UsersManager implements UsersManagerLocal {
 
     public UsersManager() {
 
-        users.put(1L, new User(1L, "User1", "password1", "user3@mail.com", 11L));
-        users.put(1L, new User(1L, "User2", "password2", "user3@mail.com", 11L));
-        users.put(1L, new User(1L, "User2", "password3", "user3@mail.com", 22L));
+//        users.put(1L, new User(1L, "User1", "password1", "user3@mail.com", 11L));
+//        users.put(1L, new User(1L, "User2", "password2", "user3@mail.com", 11L));
+//        users.put(1L, new User(1L, "User2", "password3", "user3@mail.com", 22L));
 
     }
 

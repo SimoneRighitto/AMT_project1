@@ -23,9 +23,9 @@ public class OrganizationManager implements OrganizationManagerLocal {
 
     public OrganizationManager() {
 
-        organizations.put(1L, new Organization(1L, "Organization1", 2L));
-        organizations.put(1L, new Organization(1L, "Organization1", 2L));
-        organizations.put(1L, new Organization(1L, "Organization1", 2L));
+//        organizations.put(1L, new Organization(1L, "Organization1", 2L));
+//        organizations.put(1L, new Organization(1L, "Organization1", 2L));
+//        organizations.put(1L, new Organization(1L, "Organization1", 2L));
 
     }
 

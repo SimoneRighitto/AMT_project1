@@ -21,7 +21,7 @@ public class ObservationsManager implements ObservationsManagerLocal {
     private Map<Long, Observation> observations = new HashMap<>();
 
     public ObservationsManager() {
-        observations.put(1L, new Observation(1L, new Date(), 1L, 11L));
+        //observations.put(1L, new Observation(1L, new Date(), 1L, 11L));
     }
 
     @Override
