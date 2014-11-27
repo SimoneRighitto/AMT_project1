@@ -20,6 +20,13 @@ public class Observation {
 
     public Observation() {
     }
+    
+    public Observation(long id, Date time, double value, long sensorID) {
+        this.id = id;
+        this.time = time;
+        this.value = value;
+        this.sensorID = sensorID;
+    }
 
     public long getId() {
         return id;
