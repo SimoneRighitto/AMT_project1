@@ -5,7 +5,7 @@
  */
 package ch.heigvd.amt.amt_api_project.services;
 
-import ch.heigvd.amt.amt_api_project.model.Observation;
+import ch.heigvd.amt.amt_api_project.model.Fact;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,10 +14,16 @@ import javax.ejb.Local;
  * @author Maillard
  */
 @Local
-public interface ObservationManagerLocal {
+public interface FactsManagerLocal {
 
-    public Observation findObservationByID(long id);
+    public List<Fact> findAllFacts();
 
-    public long createObservation(Observation toObservation);
+    public Fact findFactByID(long id);
 
+    public long createFact(Fact toFact);
+
+    public void updateFact(Fact toFact);
+
+    public void deleteFact(long id);
+    
 }

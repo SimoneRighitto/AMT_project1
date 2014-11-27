@@ -8,7 +8,6 @@ package ch.heigvd.amt.amt_api_project.services;
 import ch.heigvd.amt.amt_api_project.model.Observation;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
 
@@ -17,11 +16,11 @@ import javax.ejb.Stateless;
  * @author Maillard
  */
 @Stateless
-public class ObservationManager implements ObservationManagerLocal {
+public class ObservationsManager implements ObservationsManagerLocal {
     
     private Map<Long, Observation> observations = new HashMap<>();
 
-    public ObservationManager() {
+    public ObservationsManager() {
         observations.put(1L, new Observation(1L, new Date(), 1L, 11L));
     }
 

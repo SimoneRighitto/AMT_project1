@@ -6,12 +6,8 @@
 package ch.heigvd.amt.amt_api_project.api;
 
 import ch.heigvd.amt.amt_api_project.dto.ObservationDTO;
-import ch.heigvd.amt.amt_api_project.dto.UserDTO;
 import ch.heigvd.amt.amt_api_project.model.Observation;
-import ch.heigvd.amt.amt_api_project.model.User;
-import ch.heigvd.amt.amt_api_project.services.ObservationManagerLocal;
-import java.util.ArrayList;
-import java.util.List;
+import ch.heigvd.amt.amt_api_project.services.ObservationsManagerLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -32,7 +28,7 @@ import javax.ws.rs.core.UriInfo;
 public class ObservationResource {
     
     @EJB
-    private ObservationManagerLocal observationManager;
+    private ObservationsManagerLocal observationManager;
     
     @Context
     private UriInfo context;
