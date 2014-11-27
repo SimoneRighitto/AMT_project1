@@ -88,19 +88,22 @@ public class UserResource {
      */
     private User toUser(UserDTO dtoUser, User originalUser) {
         originalUser.setEmail(dtoUser.getEmail());
+        originalUser.setId(dtoUser.getId());
+        originalUser.setIsContact(dtoUser.isIsContact());
         originalUser.setName(dtoUser.getName());
-        originalUser.setOrganizationID(dtoUser.getOrganizationID());
-        
+        originalUser.setOrganization(dtoUser.getOrganization());
+
         return originalUser;
     }
 
     private UserDTO toDTO(User user) {
-        UserDTO dtoUser=  new UserDTO();
-        dtoUser.setId(user.getId());
+        UserDTO dtoUser = new UserDTO();
         dtoUser.setEmail(user.getEmail());
+        dtoUser.setId(user.getId());
+        dtoUser.setIsContact(user.isIsContact());
         dtoUser.setName(user.getName());
-        dtoUser.setOrganizationID(user.getOrganizationID());
-        
+        dtoUser.setOrganization(user.getOrganization());
+
         return dtoUser;
     }
 }
