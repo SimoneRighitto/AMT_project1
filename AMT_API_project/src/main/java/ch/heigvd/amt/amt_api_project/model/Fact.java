@@ -19,6 +19,14 @@ public class Fact {
 
     public Fact() {
     }
+    
+    public Fact(long id, String information, String type, String visibility, long organizationID) {
+        this.id = id;
+        this.information = information;
+        this.type = type;
+        this.visibility = visibility;
+        this.organizationID = organizationID;
+    }
 
     public long getId() {
         return id;
