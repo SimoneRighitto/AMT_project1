@@ -88,9 +88,12 @@ public class OrganizationResource {
      */
     private Organization toOrganization(OrganizationDTO dtoOrganization, Organization originalOrganization) {
 
-        originalOrganization.setContactUserID(dtoOrganization.getContactUserID());
         originalOrganization.setId(dtoOrganization.getId());
         originalOrganization.setName(dtoOrganization.getName());
+        originalOrganization.setContatUser(dtoOrganization.getContatUser());
+        originalOrganization.setFacts(dtoOrganization.getFacts());
+        originalOrganization.setSensors(dtoOrganization.getSensors());
+        originalOrganization.setUsers(dtoOrganization.getUsers());
         
                 
        return originalOrganization;
@@ -98,9 +101,12 @@ public class OrganizationResource {
 
     private OrganizationDTO toDTO(Organization organization) {
         OrganizationDTO dtoOrganization=  new OrganizationDTO();
-        dtoOrganization.setContactUserID(organization.getContactUserID());
         dtoOrganization.setId(organization.getId());
         dtoOrganization.setName(organization.getName());
+        dtoOrganization.setContatUser(organization.getContatUser());
+        dtoOrganization.setFacts(organization.getFacts());
+        dtoOrganization.setSensors(organization.getSensors());
+        dtoOrganization.setUsers(organization.getUsers());
         
         return dtoOrganization;
     }

@@ -85,10 +85,11 @@ public class FactResource {
      * Conversion utility methods
      */
     private Fact toFact(FactDTO dtoFact, Fact originalFact) {
+        originalFact.setId(dtoFact.getId());
         originalFact.setInformation(dtoFact.getInformation());
         originalFact.setType(dtoFact.getType());
         originalFact.setVisibility(dtoFact.getVisibility());
-        originalFact.setOrganizationID(dtoFact.getOrganizationID());
+        originalFact.setOrganizationOwner(dtoFact.getOrganizationOwner());
         
         return originalFact;
     }
@@ -99,7 +100,7 @@ public class FactResource {
         dtoFact.setInformation(fact.getInformation());
         dtoFact.setType(fact.getType());
         dtoFact.setVisibility(fact.getVisibility());
-        dtoFact.setOrganizationID(fact.getOrganizationID());
+        dtoFact.setOrganizationOwner(fact.getOrganizationOwner());
         
         return dtoFact;
     }
