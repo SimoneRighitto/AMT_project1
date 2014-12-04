@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -18,7 +20,9 @@ import javax.ejb.Stateless;
 @Stateless
 public class ObservationsManager implements ObservationsManagerLocal {
     
-    private Map<Long, Observation> observations = new HashMap<>();
+//    private Map<Long, Observation> observations = new HashMap<>();
+    @PersistenceContext
+    EntityManager em;
 
     public ObservationsManager() {
         //observations.put(1L, new Observation(1L, new Date(), 1L, 11L));
@@ -26,13 +30,19 @@ public class ObservationsManager implements ObservationsManagerLocal {
 
     @Override
     public Observation findObservationByID(long id) {
-        return observations.get(id);
+//        return observations.get(id);
+        return em.find(Observation.class, id);
     }
 
     @Override
     public long createObservation(Observation observation) {
-        observation.setId(observations.size() + 1);
-        observations.put(observation.getId(), observation);
+//        observation.setId(observations.size() + 1);
+//        observations.put(observation.getId(), observation);
+//        return observation.getId();
+        em.persist(observation);
+        em.flush();
+        em.detach(observation);
+        System.out.println("Fact id: " + observation.getId());
         return observation.getId();
     }
 }

@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -18,8 +20,10 @@ import javax.ejb.Stateless;
 @Stateless
 public class SensorsManager implements SensorsManagerLocal {
 
-    private Map<Long, Sensor> organizations = new HashMap<>();
-
+//    private Map<Long, Sensor> organizations = new HashMap<>();
+    @PersistenceContext
+    EntityManager em;
+    
     public SensorsManager() {
 
 //        organizations.put(1L, new Sensor(1L, "sensor1", "roof", "clima", "public", 2L));
@@ -30,25 +34,26 @@ public class SensorsManager implements SensorsManagerLocal {
 
     @Override
     public Sensor findSensorByID(long id) {
-        return organizations.get(id);
+        return em.find(Sensor.class, id);
     }
 
 
     @Override
-    public long createSensor(Sensor organization) {
-        organization.setId(organizations.size() + 1);
-        organizations.put(organization.getId(), organization);
-
-        return organization.getId();
+    public long createSensor(Sensor sensor) {
+         em.persist(sensor);
+        em.flush();
+        em.detach(sensor);
+        System.out.println("Fact id: " + sensor.getId());
+        return sensor.getId();
     }
 
     @Override
-    public void updateSensor(Sensor organization) {
-        organizations.put(organization.getId(), organization);
+    public void updateSensor(Sensor sensor) {
+        em.merge(sensor);
     }
 
     @Override
     public void deleteSensor(long id) {
-        organizations.remove(id);
+        em.remove(id);
     }
 }
