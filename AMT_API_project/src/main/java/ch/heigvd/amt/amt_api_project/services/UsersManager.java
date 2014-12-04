@@ -39,7 +39,7 @@ public class UsersManager implements UsersManagerLocal {
     @Override
     public List<User> findAllUsers() {
         List<User> users;
-        users = em.createNamedQuery("findAll").getResultList();
+        users = em.createNamedQuery("findAllUsers").getResultList();
         em.clear();// detach all entities
         return users;
     }

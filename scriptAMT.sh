@@ -7,7 +7,7 @@ DB_TECHNICAL_USER=AMTTechnicalUser
 DB_TECHNICAL_USER_PASSWORD=go
 JDBC_CONNECTION_POOL_NAME="$DB_NAME"_pool
 JDBC_JNDI_NAME=JDBC/"$DB_NAME"
-JAR_CONNECTOR="C:\Users\RigHitZ\Documents\Heig-VD\5semestre\AMT\workspaceAMT\labo4_JDBC"
+JAR_CONNECTOR="C:\Users\RigHitZ\Documents\Heig-VD\5semestre\AMT\AMT_project1"
 
 # Partie MySQL
 

@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @NamedQueries(
         {
             @NamedQuery(
-                    name = "findAll",
+                    name = "findAllFacts",
                     query = "SELECT f FROM Fact f"
             )
         }

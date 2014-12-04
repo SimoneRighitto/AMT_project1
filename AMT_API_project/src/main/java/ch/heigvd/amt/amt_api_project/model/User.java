@@ -19,11 +19,11 @@ import javax.persistence.Table;
  *
  * @author Simone Righitto
  */
-@Table(name="amt_user")
+@Table(name="Amt_user")
 @NamedQueries(
         {
             @NamedQuery(
-                    name = "findAll",
+                    name = "findAllUsers",
                     query = "SELECT u FROM Amt_user u"
             )
         }

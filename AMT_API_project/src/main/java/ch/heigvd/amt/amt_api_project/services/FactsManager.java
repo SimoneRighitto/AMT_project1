@@ -36,7 +36,7 @@ public class FactsManager implements FactsManagerLocal {
 //        return new ArrayList<Fact>(facts.values());
         
         List<Fact> facts;
-        facts = em.createNamedQuery("findAll").getResultList();
+        facts = em.createNamedQuery("findAllFacts").getResultList();
         em.clear();// detach all entities
         return facts;
     }
