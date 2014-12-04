@@ -29,14 +29,14 @@ public class Sensor implements Serializable {
     private String description;
     private String type;
     private String visibility;
-    @ManyToOne
+    @ManyToOne()
     private Organization organizationOwner;
 
     public Sensor() {
     }
 
-    public Sensor(long id, String name, String description, String type, String visibility, Organization organizationOwner) {
-        this.id = id;
+    public Sensor( String name, String description, String type, String visibility, Organization organizationOwner) {
+      
         this.name = name;
         this.description = description;
         this.type = type;

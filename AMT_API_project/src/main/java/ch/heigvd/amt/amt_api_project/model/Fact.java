@@ -43,8 +43,8 @@ public class Fact implements Serializable {
     public Fact() {
     }
 
-    public Fact(long id, String information, String type, String visibility, Organization organizationOwner) {
-        this.id = id;
+    public Fact(String information, String type, String visibility, Organization organizationOwner) {
+     
         this.information = information;
         this.type = type;
         this.visibility = visibility;

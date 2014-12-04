@@ -51,7 +51,6 @@ public class OrganizationManager implements OrganizationManagerLocal {
     public long createOrganization(Organization organization) {
         em.persist(organization);
         em.flush();
-        em.detach(organization);
         System.out.println("Fact id: " + organization.getId());
         return organization.getId();
     }
