@@ -12,7 +12,7 @@ import javax.ws.rs.Path;
  */
 @Path("generate")
 @Stateless
-public class TestDataResource implements TestDataResourceLocal {
+public class TestDataResource {
     @EJB
     private TestDataManagerLocal testDataManager;
 

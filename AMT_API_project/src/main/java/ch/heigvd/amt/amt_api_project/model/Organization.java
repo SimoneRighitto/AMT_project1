@@ -21,7 +21,6 @@ import javax.persistence.Table;
  *
  * @author Simone Righitto
  */
-@Table(name = "organization")
 @NamedQueries(
         {
             @NamedQuery(
@@ -41,11 +40,11 @@ public class Organization implements Serializable {
     @OneToMany(mappedBy = "organizationOwner")
     private List<Sensor> sensors = new ArrayList<>();
     @OneToMany(mappedBy = "organization")
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
     @OneToOne
     private User contatUser;
     @OneToMany(mappedBy = "organizationOwner")
-    private List<Fact> facts;
+    private List<Fact> facts = new ArrayList<>();
 
     public Organization() {
     }

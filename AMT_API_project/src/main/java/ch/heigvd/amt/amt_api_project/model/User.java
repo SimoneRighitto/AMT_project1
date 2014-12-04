@@ -24,7 +24,7 @@ import javax.persistence.Table;
         {
             @NamedQuery(
                     name = "findAllUsers",
-                    query = "SELECT u FROM Amt_user u"
+                    query = "SELECT u FROM User u"
             )
         }
 )
