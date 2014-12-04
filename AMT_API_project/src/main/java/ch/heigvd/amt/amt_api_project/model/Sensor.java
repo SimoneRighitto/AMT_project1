@@ -7,31 +7,36 @@ package ch.heigvd.amt.amt_api_project.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Simone Righitto
  */
+@Table(name="sensor")
 
 @Entity
 public class Sensor implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String description;
     private String type;
     private String visibility;
-    @ManyToOne
+    @ManyToOne()
     private Organization organizationOwner;
 
     public Sensor() {
     }
 
-    public Sensor(long id, String name, String description, String type, String visibility, Organization organizationOwner) {
-        this.id = id;
+    public Sensor( String name, String description, String type, String visibility, Organization organizationOwner) {
+      
         this.name = name;
         this.description = description;
         this.type = type;

@@ -8,21 +8,28 @@ package ch.heigvd.amt.amt_api_project.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author Simone Righitto
  */
+@Table(name="observation")
 
 @Entity
 public class Observation implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private Date time;
-    private double value;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date observedAt;
+    private double observedValue;
     @ManyToOne
     private Sensor sourceSensor;
     
@@ -30,10 +37,10 @@ public class Observation implements Serializable {
     public Observation() {
     }
 
-    public Observation(long id, Date time, double value, Sensor sourceSensor) {
-        this.id = id;
-        this.time = time;
-        this.value = value;
+    public Observation(Date time, double value, Sensor sourceSensor) {
+       
+        this.observedAt = time;
+        this.observedValue = value;
         this.sourceSensor = sourceSensor;
     }
 
@@ -45,20 +52,20 @@ public class Observation implements Serializable {
         this.id = id;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getObservedAt() {
+        return observedAt;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setObservedAt(Date observedAt) {
+        this.observedAt = observedAt;
     }
 
-    public double getValue() {
-        return value;
+    public double getObservedValue() {
+        return observedValue;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setObservedValue(double observedValue) {
+        this.observedValue = observedValue;
     }
 
     public Sensor getSourceSensor() {

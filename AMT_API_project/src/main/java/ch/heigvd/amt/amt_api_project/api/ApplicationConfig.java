@@ -26,6 +26,7 @@ public class ApplicationConfig extends Application {
         resources.add(ch.heigvd.amt.amt_api_project.api.ObservationResource.class);
         resources.add(ch.heigvd.amt.amt_api_project.api.OrganizationResource.class);
         resources.add(ch.heigvd.amt.amt_api_project.api.SensorResource.class);
+        resources.add(ch.heigvd.amt.amt_api_project.api.TestDataResource.class);
         resources.add(ch.heigvd.amt.amt_api_project.api.UserResource.class);
     }
 

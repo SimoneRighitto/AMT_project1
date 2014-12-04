@@ -2,46 +2,56 @@
  * Developped for study purposes at Heig-VD.ch
  * Created: 20-nov-2014
  */
-
 package ch.heigvd.amt.amt_api_project.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Simone Righitto
  */
+@Table(name = "organization")
+@NamedQueries(
+        {
+            @NamedQuery(
+                    name = "findAll",
+                    query = "SELECT o FROM Organization o"
+            )
+        }
+)
 
 @Entity
 public class Organization implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    @OneToMany
-    private List<Sensor> sensors;
-    @OneToMany
+    @OneToMany(mappedBy = "organizationOwner")
+    private List<Sensor> sensors = new ArrayList<>();
+    @OneToMany(mappedBy = "organization")
     private List<User> users;
     @OneToOne
     private User contatUser;
-    @OneToMany
+    @OneToMany(mappedBy = "organizationOwner")
     private List<Fact> facts;
 
     public Organization() {
     }
 
-    public Organization(long id, String name, List<Sensor> sensors, List<User> users, User contatUser, List<Fact> facts) {
-        this.id = id;
+    public Organization(String name) {
         this.name = name;
-        this.sensors = sensors;
-        this.users = users;
-        this.contatUser = contatUser;
-        this.facts = facts;
     }
 
     public long getId() {
@@ -92,10 +102,4 @@ public class Organization implements Serializable {
         this.facts = facts;
     }
 
-
-    
-    
-
-   
-    
 }
