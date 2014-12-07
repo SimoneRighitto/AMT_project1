@@ -23,7 +23,7 @@ public class TestDataManager implements TestDataManagerLocal {
     @Override
     public void generateTestData() {
         // Let's create a first test organization
-        Organization org1 = new Organization();
+        Organization org1 = new Organization("org1");
         organizationManager.createOrganization(org1);
     }
 
