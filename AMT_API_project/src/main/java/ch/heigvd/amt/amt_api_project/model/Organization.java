@@ -42,7 +42,7 @@ public class Organization implements Serializable {
     @OneToMany(mappedBy = "organization")
     private List<User> users = new ArrayList<>();
     @OneToOne
-    private User contatUser;
+    private User contactUser;
     @OneToMany(mappedBy = "organizationOwner")
     private List<Fact> facts = new ArrayList<>();
 
@@ -85,12 +85,12 @@ public class Organization implements Serializable {
         this.users = users;
     }
 
-    public User getContatUser() {
-        return contatUser;
+    public User getContactUser() {
+        return contactUser;
     }
 
-    public void setContatUser(User contatUser) {
-        this.contatUser = contatUser;
+    public void setContactUser(User contactUser) {
+        this.contactUser = contactUser;
     }
 
     public List<Fact> getFacts() {

@@ -17,9 +17,9 @@ public interface SensorsManagerLocal {
     
     public Sensor findSensorByID(long id);
 
-    public long createSensor(Sensor organization);
+    public long createSensor(Sensor sensor);
 
-    public void updateSensor(Sensor organization);
+    public void updateSensor(Sensor sensor);
 
     public void deleteSensor(long id);
 }

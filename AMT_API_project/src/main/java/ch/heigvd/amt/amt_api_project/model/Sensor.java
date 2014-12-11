@@ -5,7 +5,9 @@
 
 package ch.heigvd.amt.amt_api_project.model;
 
+import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +24,9 @@ import javax.persistence.Table;
 @Entity
 public class Sensor implements Serializable {
 
+//    @EJB
+//    private OrganizationManagerLocal organizationManager;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -35,13 +40,13 @@ public class Sensor implements Serializable {
     public Sensor() {
     }
 
-    public Sensor( String name, String description, String type, String visibility, Organization organizationOwner) {
+    public Sensor( String name, String description, String type, String visibility, long organizationOwnerId) {
       
         this.name = name;
         this.description = description;
         this.type = type;
         this.visibility = visibility;
-        this.organizationOwner = organizationOwner;
+//        this.organizationOwner = organizationManager.findOrganizationByID(organizationOwnerId);
     }
 
     public long getId() {

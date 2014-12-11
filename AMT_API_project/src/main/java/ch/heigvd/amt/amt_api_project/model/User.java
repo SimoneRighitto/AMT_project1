@@ -2,10 +2,11 @@
  * Developped for study purposes at Heig-VD.ch
  * Created: 20-nov-2014
  */
-
 package ch.heigvd.amt.amt_api_project.model;
 
+import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,7 @@ import javax.persistence.Table;
  *
  * @author Simone Righitto
  */
-@Table(name="Amt_user")
+@Table(name = "Amt_user")
 @NamedQueries(
         {
             @NamedQuery(
@@ -31,7 +32,7 @@ import javax.persistence.Table;
 
 @Entity
 public class User implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -41,17 +42,21 @@ public class User implements Serializable {
     @ManyToOne
     private Organization organization;
     private boolean isContact;
-    
+
+    @EJB
+    private OrganizationManagerLocal organizationManager;
 
     public User() {
     }
 
-    public User( String name, String password, String email, Organization organization, boolean isContact) {
-        
+    public User(String name, String password, String email, long organizationId, boolean isContact) {
+
         this.name = name;
         this.password = password;
         this.email = email;
-        this.organization = organization;
+
+        this.organization = organizationManager.findOrganizationByID(organizationId);
+   
         this.isContact = isContact;
     }
 
@@ -103,8 +108,4 @@ public class User implements Serializable {
         this.isContact = isContact;
     }
 
-    
-
-   
 }
-

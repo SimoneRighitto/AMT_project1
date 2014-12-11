@@ -4,13 +4,8 @@
  */
 package ch.heigvd.amt.amt_api_project.services;
 
-import ch.heigvd.amt.amt_api_project.model.Fact;
 import ch.heigvd.amt.amt_api_project.model.Organization;
-import ch.heigvd.amt.amt_api_project.model.Organization;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
