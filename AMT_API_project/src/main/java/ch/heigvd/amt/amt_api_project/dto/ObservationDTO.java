@@ -17,7 +17,7 @@ public class ObservationDTO {
     private long id;
     private Date time;
     private double value;
-    private Sensor sourceSensor;
+    private long sourceSensorId;
     
 
     public ObservationDTO() {
@@ -48,14 +48,11 @@ public class ObservationDTO {
         this.value = value;
     }
 
-    public Sensor getSourceSensor() {
-        return sourceSensor;
+    public long getSourceSensor() {
+        return sourceSensorId;
     }
 
-    public void setSourceSensor(Sensor sourceSensor) {
-        this.sourceSensor = sourceSensor;
+    public void setSourceSensor(long sourceSensor) {
+        this.sourceSensorId = sourceSensor;
     }
-    
-   
-    
 }

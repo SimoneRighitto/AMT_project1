@@ -21,7 +21,7 @@ GLASSFISH_PATH="C:\Program Files\glassfish-4.1\glassfish\bin"
 
 # Partie MySQL
 
-cd "C:\Program Files\wamp\bin\mysql\mysql5.6.17\bin"
+cd "'C:\Program Files\wamp\bin\mysql\mysql5.6.17\bin'"
 
 ./mysql -u root << EOF
 DROP DATABASE IF EXISTS $DB_NAME;

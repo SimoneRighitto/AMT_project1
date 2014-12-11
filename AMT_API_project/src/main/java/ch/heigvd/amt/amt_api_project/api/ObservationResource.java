@@ -8,6 +8,7 @@ package ch.heigvd.amt.amt_api_project.api;
 import ch.heigvd.amt.amt_api_project.dto.ObservationDTO;
 import ch.heigvd.amt.amt_api_project.model.Observation;
 import ch.heigvd.amt.amt_api_project.services.ObservationsManagerLocal;
+import ch.heigvd.amt.amt_api_project.services.SensorsManagerLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -29,6 +30,9 @@ public class ObservationResource {
     
     @EJB
     private ObservationsManagerLocal observationManager;
+    
+    @EJB
+    SensorsManagerLocal sensorsManager;
     
     @Context
     private UriInfo context;
@@ -63,7 +67,7 @@ public class ObservationResource {
         originalObservation.setId(dtoObservation.getId());
         originalObservation.setObservedAt(dtoObservation.getTime());
         originalObservation.setObservedValue(dtoObservation.getValue());
-        originalObservation.setSourceSensor(dtoObservation.getSourceSensor());
+        originalObservation.setSourceSensor(sensorsManager.findSensorByID(dtoObservation.getSourceSensor()));
         
         return originalObservation;
     }
@@ -73,7 +77,7 @@ public class ObservationResource {
         dtoObservation.setId(observation.getId());
         dtoObservation.setTime(observation.getObservedAt());
         dtoObservation.setValue(observation.getObservedValue());
-        dtoObservation.setSourceSensor(observation.getSourceSensor());
+        dtoObservation.setSourceSensor(observation.getSourceSensor().getId());
         
         return dtoObservation;
     }
