@@ -18,7 +18,7 @@ public class SensorDTO {
     private String description;
     private String type;
     private String visibility;
-    private Organization organizationOwner;
+    private long organizationOwnerId;
 
     public SensorDTO() {
     }
@@ -65,12 +65,12 @@ public class SensorDTO {
         this.visibility = visibility;
     }
 
-    public Organization getOrganizationOwner() {
-        return organizationOwner;
+    public long getOrganizationOwnerId() {
+        return organizationOwnerId;
     }
 
-    public void setOrganizationOwner(Organization organizationOwner) {
-        this.organizationOwner = organizationOwner;
+    public void setOrganizationOwnerId(long organizationOwnerId) {
+        this.organizationOwnerId = organizationOwnerId;
     }
 
    

@@ -16,7 +16,7 @@ public class UserDTO {
     private long id;
     private String name;
     private String email;
-    private Organization organization;
+    private long organizationId;
     private boolean isContact;
     
 
@@ -49,12 +49,12 @@ public class UserDTO {
         this.email = email;
     }
 
-    public Organization getOrganization() {
-        return organization;
+    public long getOrganizationId() {
+        return organizationId;
     }
 
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
+    public void setOrganizationId(long organizationId) {
+        this.organizationId = organizationId;
     }
 
     public boolean isIsContact() {

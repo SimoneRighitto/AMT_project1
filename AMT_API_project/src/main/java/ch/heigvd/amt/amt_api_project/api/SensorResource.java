@@ -6,6 +6,7 @@ package ch.heigvd.amt.amt_api_project.api;
 
 import ch.heigvd.amt.amt_api_project.dto.SensorDTO;
 import ch.heigvd.amt.amt_api_project.model.Sensor;
+import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
 import ch.heigvd.amt.amt_api_project.services.SensorsManagerLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,6 +31,9 @@ public class SensorResource {
 
     @EJB
     SensorsManagerLocal sensorsManager;
+    
+    @EJB
+    OrganizationManagerLocal organizationManager;
 
     @Context
     private UriInfo context;
@@ -74,7 +78,8 @@ public class SensorResource {
         originalSensor.setDescription(dtoSensor.getDescription());
         originalSensor.setId(dtoSensor.getId());
         originalSensor.setName(dtoSensor.getName());
-        originalSensor.setOrganizationOwner(dtoSensor.getOrganizationOwner());
+        
+        originalSensor.setOrganizationOwner(organizationManager.findOrganizationByID(dtoSensor.getOrganizationOwnerId()));
         originalSensor.setType(dtoSensor.getType());
         originalSensor.setVisibility(dtoSensor.getVisibility());
 
@@ -87,7 +92,7 @@ public class SensorResource {
         dtoSensor.setDescription(sensor.getDescription());
         dtoSensor.setId(sensor.getId());
         dtoSensor.setName(sensor.getName());
-        dtoSensor.setOrganizationOwner(sensor.getOrganizationOwner());
+        dtoSensor.setOrganizationOwnerId(sensor.getOrganizationOwner().getId());
         dtoSensor.setType(sensor.getType());
         dtoSensor.setVisibility(sensor.getVisibility());
 

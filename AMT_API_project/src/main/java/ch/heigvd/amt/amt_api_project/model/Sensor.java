@@ -40,13 +40,13 @@ public class Sensor implements Serializable {
     public Sensor() {
     }
 
-    public Sensor( String name, String description, String type, String visibility, long organizationOwnerId) {
+    public Sensor( String name, String description, String type, String visibility, Organization organizationOwner) {
       
         this.name = name;
         this.description = description;
         this.type = type;
         this.visibility = visibility;
-//        this.organizationOwner = organizationManager.findOrganizationByID(organizationOwnerId);
+        this.organizationOwner = organizationOwner;
     }
 
     public long getId() {

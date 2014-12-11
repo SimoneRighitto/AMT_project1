@@ -37,20 +37,23 @@ public class TestDataManager implements TestDataManagerLocal {
         //now let's create some users for the organizations:
         List<Long> org1Users= new ArrayList();
         for (int i = 0; i < 5; i++) {
-            org1Users.add(userManger.createUser(new User("user"+i, "user"+i, "user"+i+"@org1.com", org1.getId(), false)));
+            org1Users.add(userManger.createUser(new User("user"+i, "user"+i, "user"+i+"@org1.com", org1, false)));
             
         }
         
         User contactUser = userManger.findUserByID(org1Users.get(0));
         contactUser.setIsContact(true);
         userManger.updateUser(contactUser);
+        org1.setContactUser(contactUser);
+        organizationManager.updateOrganization(org1);
+        
 
         
         //We create some sensors for our organization:
-//        List<Long> org1Sensors= new ArrayList<>();
-//        for (int i = 0; i < 5; i++) {
-//            org1Sensors.add(sensorManager.createSensor(new Sensor("s"+i, "testSensor"+i, "meteo", "public", org1.getId())));
-//        }
+        List<Long> org1Sensors= new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            org1Sensors.add(sensorManager.createSensor(new Sensor("s"+i, "testSensor"+i, "meteo", "public", org1)));
+        }
     }
 
     

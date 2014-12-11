@@ -7,6 +7,7 @@ package ch.heigvd.amt.amt_api_project.model;
 import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,13 +50,13 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, String password, String email, long organizationId, boolean isContact) {
+    public User(String name, String password, String email, Organization organization, boolean isContact) {
 
         this.name = name;
         this.password = password;
         this.email = email;
 
-        this.organization = organizationManager.findOrganizationByID(organizationId);
+        this.organization = organization;
    
         this.isContact = isContact;
     }
