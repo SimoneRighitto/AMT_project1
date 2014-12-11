@@ -44,13 +44,13 @@ public class TestDataManager implements TestDataManagerLocal {
         User contactUser = userManger.findUserByID(org1Users.get(0));
         contactUser.setIsContact(true);
         userManger.updateUser(contactUser);
+
         
         //We create some sensors for our organization:
 //        List<Long> org1Sensors= new ArrayList<>();
 //        for (int i = 0; i < 5; i++) {
 //            org1Sensors.add(sensorManager.createSensor(new Sensor("s"+i, "testSensor"+i, "meteo", "public", org1.getId())));
 //        }
-        
     }
 
     
