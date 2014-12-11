@@ -4,10 +4,10 @@ var http = require('http');
 var fs = require('fs');
 
 // An object of options to indicate where to post to
-var post_options = {
+var post_options_observations = {
   host: 'localhost',
   port: '8080',
-  path: '/AMT_API_project/api/organizations/',
+  path: '/AMT_API_project/api/observations/',
   method: 'POST',
   headers: {
 	  'Content-Type': 'application/json'
@@ -16,17 +16,18 @@ var post_options = {
 
 // Set up the request
 
-var insertData = function(name) {
-	var post_req = http.request(post_options, function(res) {
+var insertObservation = function(value) {
+	var post_req = http.request(post_options_observations, function(res) {
 	  res.setEncoding('utf8');
 	  res.on('data', function (chunk) {
 		  console.log('Response: ' + chunk);
 	  });
 	});
-	post_req.write('{"name" : "' + name + '"}');
+	var data = '{"time" : "' + new Date().toJSON() + '", "value" : "' + value + '"}';
+	post_req.write(data);
 	post_req.end(); 
 }
 
-for (var i = 1; i < 5000; i++) {
-	insertData("organizations" + i);
+for (var i = 1; i < 100; i++) {
+	insertObservation(Math.floor((Math.random() * 100) + 1), 3);
 }
