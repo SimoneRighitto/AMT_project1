@@ -1,17 +1,26 @@
 #!/bin/bash
-# indique au système que l'argument qui suit est le programme utilisé pour exécuter ce fichier.
-# En cas général les "#" servent à faire des commentaires comme ici
+#
+#Description:
+#  This script in a first part will setup a mysql database.
+#  Then it will create a domain, a jdbc-resource and a connection-pool related to the created database for the glassfish server
+#
+#Authors:
+#   Simone Righitto, StÃ©phane Maillard
 
+#definition of useful variables
 DB_NAME=AMTDatabase
 DB_TECHNICAL_USER=AMTTechnicalUser
 DB_TECHNICAL_USER_PASSWORD=go
 JDBC_CONNECTION_POOL_NAME="$DB_NAME"_pool
 JDBC_JNDI_NAME=JDBC/"$DB_NAME"
-JAR_CONNECTOR="C:\Users\RigHitZ\Documents\Heig-VD\5semestre\AMT\AMT_project1"
+DOMAIN_NAME=domainAMT 
+#Here we have to specify the path where the mysql .jar connector is located. As an example we give the path of our local clone of the github project, where we can find the mysql-connector-java-5.1.33-bin.jar connector
+JAR_CONNECTOR="C:\Users\RigHitZ\Documents\Heig-VD\5semestre\AMT\AMT_project1\mysql-connector-java-5.1.33-bin.jar"
+#Here we can specify where is the galssfish bin directory
+GLASSFISH_PATH="C:\Program Files\glassfish-4.1\glassfish\bin"
 
 # Partie MySQL
 
-#cd "/cygdrive/c/wamp/bin/mysql/mysql5.6.12/bin"
 cd "C:\Program Files\wamp\bin\mysql\mysql5.6.17\bin"
 
 ./mysql -u root << EOF
@@ -31,24 +40,14 @@ GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_TECHNICAL_USER'@'localhost';
 GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_TECHNICAL_USER'@'%'; 
 
 USE $DB_NAME;
-CREATE TABLE \`sensors\` (\`id\` int(11) NOT NULL AUTO_INCREMENT, \`description\` tinytext NOT NULL, \`type\` tinytext NOT NULL, PRIMARY KEY
-(\`id\`), UNIQUE KEY \`id\` (\`id\`))
-ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
-
-INSERT INTO \`sensors\` (\`id\`, \`description\`,\`type\`) VALUES (NULL, 'ROOM_1', 'TEMPERATURE');
-INSERT INTO \`sensors\` (\`id\`, \`description\`, \`type\`) VALUES (NULL, 'ROOM_2','TEMPERATURE');
-INSERT INTO \`sensors\` (\`id\`, \`description\`, \`type\`) VALUES (NULL, 'ROOM_31', 'TEMPERATURE');
-INSERT INTO \`sensors\` (\`id\`, \`description\`, \`type\`) VALUES (NULL, 'CAR_12', 'SPEED');
-INSERT INTO \`sensors\` (\`id\`, \`description\`, \`type\`) VALUES (NULL, 'CAR_99','SPEED');
  
 EOF
 
-# Partie Glassfish
 
-#cd "/cygdrive/c/Program Files/glassfish-4.1/glassfish/bin"
-cd "C:\Program Files\glassfish-4.1\glassfish\bin"
-DOMAIN_NAME=domainAMT 
+# Partie Glassfish
+cd $GLASSFISH_PATH
+
 
 ./asadmin.bat stop-domain $DOMAIN_NAME || true
 ./asadmin.bat delete-domain $DOMAIN_NAME || true
@@ -56,7 +55,7 @@ DOMAIN_NAME=domainAMT
 ./asadmin.bat create-domain --nopassword=true $DOMAIN_NAME
 
 
-cp $JAR_CONNECTOR/mysql-connector-java-5.1.33-bin.jar ../domains/$DOMAIN_NAME/lib
+cp $JAR_CONNECTOR ../domains/$DOMAIN_NAME/lib
 
 ./asadmin.bat start-domain $DOMAIN_NAME
 
@@ -65,10 +64,6 @@ cp $JAR_CONNECTOR/mysql-connector-java-5.1.33-bin.jar ../domains/$DOMAIN_NAME/li
 --restype=javax.sql.XADataSource \
 --datasourceclassname=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource \
 --property User=$DB_TECHNICAL_USER:Password=$DB_TECHNICAL_USER_PASSWORD:serverName=localhost:portNumber=3306:databaseName=$DB_NAME $JDBC_CONNECTION_POOL_NAME
-
-
-
-
 
 
 
