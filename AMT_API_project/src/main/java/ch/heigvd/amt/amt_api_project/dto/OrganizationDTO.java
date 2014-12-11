@@ -18,10 +18,10 @@ public class OrganizationDTO {
 
     private long id;
     private String name;
-    private List<Sensor> sensors;
-    private List<User> users;
-    private User contatUser;
-    private List<Fact> facts;
+    private List<Long> sensors;
+    private List<Long> users;
+    private long contatUserId;
+    private List<Long> facts;
 
     public OrganizationDTO() {
     }
@@ -43,42 +43,35 @@ public class OrganizationDTO {
         this.name = name;
     }
 
-    public List<Sensor> getSensors() {
+    public List<Long> getSensors() {
         return sensors;
     }
 
-    public void setSensors(List<Sensor> sensors) {
+    public void setSensors(List<Long> sensors) {
         this.sensors = sensors;
     }
 
-    public List<User> getUsers() {
+    public List<Long> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<Long> users) {
         this.users = users;
     }
 
-    public User getContatUser() {
-        return contatUser;
+    public long getContatUserId() {
+        return contatUserId;
     }
 
-    public void setContatUser(User contatUser) {
-        this.contatUser = contatUser;
+    public void setContatUserId(long contatUserId) {
+        this.contatUserId = contatUserId;
     }
 
-    public List<Fact> getFacts() {
+    public List<Long> getFacts() {
         return facts;
     }
 
-    public void setFacts(List<Fact> facts) {
+    public void setFacts(List<Long> facts) {
         this.facts = facts;
     }
-
-
-    
-    
-
-   
-    
 }

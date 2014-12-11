@@ -5,8 +5,14 @@
 package ch.heigvd.amt.amt_api_project.api;
 
 import ch.heigvd.amt.amt_api_project.dto.OrganizationDTO;
+import ch.heigvd.amt.amt_api_project.model.Fact;
 import ch.heigvd.amt.amt_api_project.model.Organization;
+import ch.heigvd.amt.amt_api_project.model.Sensor;
+import ch.heigvd.amt.amt_api_project.model.User;
+import ch.heigvd.amt.amt_api_project.services.FactsManagerLocal;
 import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
+import ch.heigvd.amt.amt_api_project.services.SensorsManagerLocal;
+import ch.heigvd.amt.amt_api_project.services.UsersManagerLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -32,6 +38,15 @@ public class OrganizationResource {
 
     @EJB
     OrganizationManagerLocal organizationsManager;
+    
+    @EJB
+    UsersManagerLocal usersManager;
+    
+    @EJB
+    FactsManagerLocal factsManager;
+    
+    @EJB
+    SensorsManagerLocal sensorsManager;
 
     @Context
     private UriInfo context;
@@ -90,23 +105,52 @@ public class OrganizationResource {
 
         originalOrganization.setId(dtoOrganization.getId());
         originalOrganization.setName(dtoOrganization.getName());
-        originalOrganization.setContactUser(dtoOrganization.getContatUser());
-        originalOrganization.setFacts(dtoOrganization.getFacts());
-        originalOrganization.setSensors(dtoOrganization.getSensors());
-        originalOrganization.setUsers(dtoOrganization.getUsers());
+        originalOrganization.setContactUser(usersManager.findUserByID(dtoOrganization.getContatUserId()));
         
+        List<Fact> facts = new ArrayList<>();
+        for (long id : dtoOrganization.getFacts()) {
+            facts.add(factsManager.findFactByID(id));
+        }
+        originalOrganization.setFacts(facts);
+        
+        List<Sensor> sensors = new ArrayList<>();
+        for (long id : dtoOrganization.getSensors()) {
+            sensors.add(sensorsManager.findSensorByID(id));
+        }
+        originalOrganization.setSensors(sensors);
+        
+        List<User> users = new ArrayList<>();
+        for (long id : dtoOrganization.getUsers()) {
+            users.add(usersManager.findUserByID(id));
+        }
+        originalOrganization.setUsers(users);
                 
-       return originalOrganization;
+        return originalOrganization;
     }
 
     private OrganizationDTO toDTO(Organization organization) {
         OrganizationDTO dtoOrganization=  new OrganizationDTO();
         dtoOrganization.setId(organization.getId());
         dtoOrganization.setName(organization.getName());
-        dtoOrganization.setContatUser(organization.getContactUser());
-        dtoOrganization.setFacts(organization.getFacts());
-        dtoOrganization.setSensors(organization.getSensors());
-        dtoOrganization.setUsers(organization.getUsers());
+        dtoOrganization.setContatUserId(organization.getContactUser().getId());
+        
+        List<Long> facts = new ArrayList<>();
+        for (Fact fact : organization.getFacts()) {
+            facts.add(fact.getId());
+        }
+        dtoOrganization.setFacts(facts);
+        
+        List<Long> sensors = new ArrayList<>();
+        for (Sensor sensor : organization.getSensors()) {
+            sensors.add(sensor.getId());
+        }
+        dtoOrganization.setSensors(sensors);
+        
+        List<Long> users = new ArrayList<>();
+        for (User user : organization.getUsers()) {
+            users.add(user.getId());
+        }
+        dtoOrganization.setUsers(users);
         
         return dtoOrganization;
     }
