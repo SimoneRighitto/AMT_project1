@@ -31,29 +31,62 @@ public class TestDataManager implements TestDataManagerLocal {
     @Override
     public void generateTestData() {
         // Let's create a first test organization
-        Organization org1 = new Organization("org1");
-        long org1Id=organizationManager.createOrganization(org1);
+        Organization heigVd = new Organization("heigVd");
+        long heigVdId=organizationManager.createOrganization(heigVd);
         
         //now let's create some users for the organizations:
-        List<Long> org1Users= new ArrayList();
+        List<Long> heigVdUsers= new ArrayList();
         for (int i = 0; i < 5; i++) {
-            org1Users.add(userManger.createUser(new User("user"+i, "user"+i, "user"+i+"@org1.com", org1, false)));
+            heigVdUsers.add(userManger.createUser(new User("user"+i, "user"+i, "user"+i+"@heigVd.com", heigVd, false)));
             
         }
         
-        User contactUser = userManger.findUserByID(org1Users.get(0));
-        contactUser.setIsContact(true);
-        userManger.updateUser(contactUser);
-        org1.setContactUser(contactUser);
-        organizationManager.updateOrganization(org1);
+        User heigVdContactUser = userManger.findUserByID(heigVdUsers.get(0));
+        heigVdContactUser.setIsContact(true);
+        userManger.updateUser(heigVdContactUser);
+        heigVd.setContactUser(heigVdContactUser);
+        organizationManager.updateOrganization(heigVd);
         
 
         
         //We create some sensors for our organization:
-        List<Long> org1Sensors= new ArrayList<>();
+        List<Long> heigVdSensors= new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            org1Sensors.add(sensorManager.createSensor(new Sensor("s"+i, "testSensor"+i, "meteo", "public", org1)));
+            heigVdSensors.add(sensorManager.createSensor(new Sensor("s"+i, "testSensor"+i, "meteo", "public", heigVd)));
         }
+        
+        
+        
+        
+        
+        // Let's create a second test organization
+        Organization policeVd = new Organization("policeVd");
+        long policeVdId=organizationManager.createOrganization(policeVd);
+        
+        //now let's create some users for the organizations:
+        List<Long> policeVdUsers= new ArrayList();
+        for (int i = 0; i < 10; i++) {
+            policeVdUsers.add(userManger.createUser(new User("officer"+i, "officer"+i, "officer"+i+"@policeVd.com", policeVd, false)));
+            
+        }
+        
+        User policeVdContactUser = userManger.findUserByID(policeVdUsers.get(0));
+        policeVdContactUser.setIsContact(true);
+        userManger.updateUser(policeVdContactUser);
+        policeVd.setContactUser(policeVdContactUser);
+        organizationManager.updateOrganization(policeVd);
+        
+
+        
+        //We create some sensors for our organization:
+        List<Long> policeVdSensors= new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            policeVdSensors.add(sensorManager.createSensor(new Sensor("r"+i, "radar"+i, "speed", "private", policeVd)));
+        }
+        
+        
+        
+        
     }
 
     

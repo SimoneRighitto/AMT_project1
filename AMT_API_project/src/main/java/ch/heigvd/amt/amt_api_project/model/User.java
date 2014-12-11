@@ -44,8 +44,6 @@ public class User implements Serializable {
     private Organization organization;
     private boolean isContact;
 
-    @EJB
-    private OrganizationManagerLocal organizationManager;
 
     public User() {
     }
