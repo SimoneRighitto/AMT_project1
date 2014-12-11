@@ -17,7 +17,7 @@ public class FactDTO {
     private String information;
     private String type;
     private String visibility;
-    private Organization organizationOwner;
+    private long organizationOwnerId;
 
     public FactDTO() {
     }
@@ -56,12 +56,12 @@ public class FactDTO {
         this.visibility = visibility;
     }
 
-    public Organization getOrganizationOwner() {
-        return organizationOwner;
+    public long getOrganizationOwnerId() {
+        return organizationOwnerId;
     }
 
-    public void setOrganizationOwner(Organization organizationOwner) {
-        this.organizationOwner = organizationOwner;
+    public void setOrganizationOwner(long organizationOwnerId) {
+        this.organizationOwnerId = organizationOwnerId;
     }
     
    

@@ -8,6 +8,7 @@ package ch.heigvd.amt.amt_api_project.api;
 import ch.heigvd.amt.amt_api_project.dto.FactDTO;
 import ch.heigvd.amt.amt_api_project.model.Fact;
 import ch.heigvd.amt.amt_api_project.services.FactsManagerLocal;
+import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -30,6 +31,9 @@ public class FactResource {
     
     @EJB
     FactsManagerLocal factsManager;
+    
+    @EJB
+    OrganizationManagerLocal organizationManager;
 
     @Context
     private UriInfo context;
@@ -89,7 +93,7 @@ public class FactResource {
         originalFact.setInformation(dtoFact.getInformation());
         originalFact.setType(dtoFact.getType());
         originalFact.setVisibility(dtoFact.getVisibility());
-        originalFact.setOrganizationOwner(dtoFact.getOrganizationOwner());
+        originalFact.setOrganizationOwner(organizationManager.findOrganizationByID(dtoFact.getOrganizationOwnerId()));
         
         return originalFact;
     }
@@ -100,7 +104,7 @@ public class FactResource {
         dtoFact.setInformation(fact.getInformation());
         dtoFact.setType(fact.getType());
         dtoFact.setVisibility(fact.getVisibility());
-        dtoFact.setOrganizationOwner(fact.getOrganizationOwner());
+        dtoFact.setOrganizationOwner(fact.getOrganizationOwner().getId());
         
         return dtoFact;
     }
