@@ -23,7 +23,7 @@ We have decided to generate some kinde of facts (daily facts : to find out stati
   * You can populate the "Observations" with the script populateAPI.js and Node.js, it will create X observations. You can directly modify X and others parameters in the file.
 
 #Documentation
-Go on http://HEROKUAPP HEREEEE !!!!!!!!!!!!!!!!!! to see our API documentation
+Go on https://hidden-savannah-5396.herokuapp.com/ to see our API documentation
 
 # TO DO
 Here a list of what we are goingo to implement in a future:
