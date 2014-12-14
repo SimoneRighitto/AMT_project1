@@ -5,10 +5,6 @@
 package ch.heigvd.amt.amt_api_project.services;
 
 import ch.heigvd.amt.amt_api_project.model.Sensor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,15 +16,12 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class SensorsManager implements SensorsManagerLocal {
 
-//    private Map<Long, Sensor> organizations = new HashMap<>();
+
     @PersistenceContext
     EntityManager em;
     
     public SensorsManager() {
 
-//        organizations.put(1L, new Sensor(1L, "sensor1", "roof", "clima", "public", 2L));
-//        organizations.put(1L, new Sensor(2L, "sensor2", "window", "clima", "public", 2L));
-//        organizations.put(1L, new Sensor(3L, "sensor3", "1st floor", "clima", "public", 2L));
 
     }
 

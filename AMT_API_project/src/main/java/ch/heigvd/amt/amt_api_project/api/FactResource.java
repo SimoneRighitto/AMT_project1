@@ -1,11 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Developped for study purposes at Heig-VD.ch
+ * Created: 20-nov-2014
  */
 package ch.heigvd.amt.amt_api_project.api;
 
+import ch.heigvd.amt.amt_api_project.dto.DailyFactDTO;
 import ch.heigvd.amt.amt_api_project.dto.FactDTO;
+import ch.heigvd.amt.amt_api_project.model.DailyFact;
 import ch.heigvd.amt.amt_api_project.model.Fact;
 import ch.heigvd.amt.amt_api_project.services.FactsManagerLocal;
 import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
@@ -88,9 +89,8 @@ public class FactResource {
     /*
      * Conversion utility methods
      */
-    private Fact toFact(FactDTO dtoFact, Fact originalFact) {
+    private DailyFact toDailyFact(DailyFactDTO dtoFact, DailyFact originalFact) {
         originalFact.setId(dtoFact.getId());
-        originalFact.setInformation(dtoFact.getInformation());
         originalFact.setType(dtoFact.getType());
         originalFact.setVisibility(dtoFact.getVisibility());
         originalFact.setOrganizationOwner(organizationManager.findOrganizationByID(dtoFact.getOrganizationOwnerId()));
@@ -98,7 +98,7 @@ public class FactResource {
         return originalFact;
     }
 
-    private FactDTO toDTO(Fact fact) {
+    private DailyFactDTO toDTO(DailyFact fact) {
         FactDTO dtoFact=  new FactDTO();
         dtoFact.setId(fact.getId());
         dtoFact.setInformation(fact.getInformation());

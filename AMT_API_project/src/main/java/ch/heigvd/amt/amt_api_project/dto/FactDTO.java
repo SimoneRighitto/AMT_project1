@@ -2,9 +2,7 @@
  * Developped for study purposes at Heig-VD.ch
  * Created: 20-nov-2014
  */
-
 package ch.heigvd.amt.amt_api_project.dto;
-
 
 /**
  *
@@ -12,8 +10,7 @@ package ch.heigvd.amt.amt_api_project.dto;
  */
 public class FactDTO {
 
-   private long id;
-    private String information;
+    private long id;
     private String type;
     private String visibility;
     private long organizationOwnerId;
@@ -21,7 +18,12 @@ public class FactDTO {
     public FactDTO() {
     }
 
-
+    public FactDTO(long id, String type, String visibility, long organizationOwnerId) {
+        this.id = id;
+        this.type = type;
+        this.visibility = visibility;
+        this.organizationOwnerId = organizationOwnerId;
+    }
 
     public long getId() {
         return id;
@@ -29,14 +31,6 @@ public class FactDTO {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getInformation() {
-        return information;
-    }
-
-    public void setInformation(String information) {
-        this.information = information;
     }
 
     public String getType() {
@@ -62,9 +56,5 @@ public class FactDTO {
     public void setOrganizationOwner(long organizationOwnerId) {
         this.organizationOwnerId = organizationOwnerId;
     }
-    
-   
 
-   
-    
 }

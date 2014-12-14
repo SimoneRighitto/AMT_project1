@@ -17,20 +17,17 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class OrganizationManager implements OrganizationManagerLocal {
 
-//    private Map<Long, Organization> organizations = new HashMap<>();
+
     @PersistenceContext
     EntityManager em;
 
     public OrganizationManager() {
 
-//        organizations.put(1L, new Organization(1L, "Organization1", 2L));
-//        organizations.put(1L, new Organization(1L, "Organization1", 2L));
-//        organizations.put(1L, new Organization(1L, "Organization1", 2L));
     }
 
     @Override
     public Organization findOrganizationByID(long id) {
-//        return organizations.get(id);
+
         return em.find(Organization.class, id);
     }
 

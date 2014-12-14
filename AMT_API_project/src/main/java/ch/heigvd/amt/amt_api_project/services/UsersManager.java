@@ -5,10 +5,7 @@
 package ch.heigvd.amt.amt_api_project.services;
 
 import ch.heigvd.amt.amt_api_project.model.User;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,15 +17,11 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class UsersManager implements UsersManagerLocal {
 
-//    private Map<Long, User> users = new HashMap<>();
+
     @PersistenceContext
     EntityManager em;
 
     public UsersManager() {
-
-//        users.put(1L, new User(1L, "User1", "password1", "user3@mail.com", 11L));
-//        users.put(1L, new User(1L, "User2", "password2", "user3@mail.com", 11L));
-//        users.put(1L, new User(1L, "User2", "password3", "user3@mail.com", 22L));
     }
 
     @Override

@@ -5,9 +5,7 @@
 
 package ch.heigvd.amt.amt_api_project.model;
 
-import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
 import java.io.Serializable;
-import javax.ejb.EJB;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

@@ -5,7 +5,6 @@
 package ch.heigvd.amt.amt_api_project.services;
 
 import ch.heigvd.amt.amt_api_project.model.Organization;
-import ch.heigvd.amt.amt_api_project.model.User;
 import java.util.List;
 import javax.ejb.Local;
 

@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Developped for study purposes at Heig-VD.ch
+ * Created: 20-nov-2014
  */
 package ch.heigvd.amt.amt_api_project.api;
 

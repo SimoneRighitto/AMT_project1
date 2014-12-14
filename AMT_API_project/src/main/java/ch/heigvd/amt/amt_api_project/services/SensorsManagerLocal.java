@@ -5,7 +5,6 @@
 package ch.heigvd.amt.amt_api_project.services;
 
 import ch.heigvd.amt.amt_api_project.model.Sensor;
-import java.util.List;
 import javax.ejb.Local;
 
 /**
