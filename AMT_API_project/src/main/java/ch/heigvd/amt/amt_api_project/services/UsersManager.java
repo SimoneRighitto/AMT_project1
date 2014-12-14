@@ -42,7 +42,6 @@ public class UsersManager implements UsersManagerLocal {
         em.persist(user);
         em.flush();
         em.detach(user);
-        System.out.println("Fact id: " + user.getId());
         return user.getId();
     }
 

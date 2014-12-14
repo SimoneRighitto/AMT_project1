@@ -82,7 +82,6 @@ public class TestDataManager implements TestDataManagerLocal {
 
         
         Date d = new Date();
-        System.out.println(d);
         Observation o1 = new Observation(d, 120.0, sensorManager.findSensorByID(policeVdSensors.get(0)));
         Observation o2 = new Observation(d, 180.0, sensorManager.findSensorByID(policeVdSensors.get(0)));
         observationManger.createObservation(o1);

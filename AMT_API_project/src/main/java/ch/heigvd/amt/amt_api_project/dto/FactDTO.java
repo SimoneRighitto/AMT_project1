@@ -17,8 +17,8 @@ public class FactDTO {
     private String type;
     private String visibility;
     private long organizationOwnerId;
-  
-    private HashMap infos;
+
+    private String infos;
     private long sensorId;
     private Date dayDate;
 
@@ -65,11 +65,11 @@ public class FactDTO {
         this.organizationOwnerId = organizationOwnerId;
     }
 
-    public HashMap<String, String> getInfos() {
+    public String getInfos() {
         return infos;
     }
 
-    public void setInfos(HashMap<String, String> infos) {
+    public void setInfos(String infos) {
         this.infos = infos;
     }
 
@@ -89,5 +89,4 @@ public class FactDTO {
         this.dayDate = dayDate;
     }
 
-   
 }

@@ -36,7 +36,6 @@ public class SensorsManager implements SensorsManagerLocal {
          em.persist(sensor);
         em.flush();
         em.detach(sensor);
-        System.out.println("Fact id: " + sensor.getId());
         return sensor.getId();
     }
 

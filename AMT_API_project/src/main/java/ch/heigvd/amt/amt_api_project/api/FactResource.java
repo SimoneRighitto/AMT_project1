@@ -4,14 +4,15 @@
  */
 package ch.heigvd.amt.amt_api_project.api;
 
-
 import ch.heigvd.amt.amt_api_project.dto.FactDTO;
 import ch.heigvd.amt.amt_api_project.model.Fact;
 import ch.heigvd.amt.amt_api_project.services.FactsManagerLocal;
 import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
 import ch.heigvd.amt.amt_api_project.services.SensorsManagerLocal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -32,13 +33,13 @@ import javax.ws.rs.core.UriInfo;
 @Path("facts")
 @Stateless
 public class FactResource {
-    
+
     @EJB
     FactsManagerLocal factsManager;
-    
+
     @EJB
     OrganizationManagerLocal organizationManager;
-    
+
     @EJB
     SensorsManagerLocal sensorManager;
 
@@ -100,27 +101,56 @@ public class FactResource {
         originalFact.setType(dtoFact.getType());
         originalFact.setVisibility(dtoFact.getVisibility());
         originalFact.setOrganizationOwner(organizationManager.findOrganizationByID(dtoFact.getOrganizationOwnerId()));
-        
+
         originalFact.setDayDate(dtoFact.getDayDate());
-        originalFact.setInfos(dtoFact.getInfos());
+
+        originalFact.setInfos(parseInfos(dtoFact.getInfos()));
+
         originalFact.setSensor(sensorManager.findSensorByID(dtoFact.getSensorId()));
-      
-        
+
         return originalFact;
     }
 
     private FactDTO toDTO(Fact fact) {
-        FactDTO dtoFact=  new FactDTO();
+        FactDTO dtoFact = new FactDTO();
         dtoFact.setId(fact.getId());
         dtoFact.setType(fact.getType());
         dtoFact.setVisibility(fact.getVisibility());
         dtoFact.setOrganizationOwnerId(fact.getOrganizationOwner().getId());
-        
+
         dtoFact.setDayDate(fact.getDayDate());
-        dtoFact.setInfos(fact.getInfos());
+
+        dtoFact.setInfos(serializeInfos(fact.getInfos()));
+
         dtoFact.setSensorId(fact.getSensor().getId());
-        
+
         return dtoFact;
     }
-    
+
+    private String serializeInfos(HashMap<String, Double> infos) {
+        StringBuilder strB = new StringBuilder();
+        for (String key : infos.keySet()) {
+            strB.append(key);
+            strB.append(" : ");
+            strB.append(infos.get(key));
+            strB.append(" ; ");
+
+        }
+        return strB.toString();
+    }
+
+    private HashMap parseInfos(String s) {
+        HashMap<String, Double> infos = new HashMap<>();
+
+        StringTokenizer strT = new StringTokenizer(s, ";");
+        String tmpToken;
+        String[] keyVal;
+        while ((tmpToken = strT.nextToken()) != null) {
+            keyVal = tmpToken.split(":");
+            infos.put(keyVal[0], Double.parseDouble(keyVal[1]));
+        }
+
+        return infos;
+    }
+
 }
