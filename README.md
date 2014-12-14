@@ -29,6 +29,8 @@ Go on https://hidden-savannah-5396.herokuapp.com/ to see our API documentation
 Here a list of what we are goingo to implement in a future:
   * We will performs security checks to ensure that the observation is valid
   * We have to implement the visibility of private/public resources (right now everyone can see private things)
+  * We want to add Pagination
+  * We will add OAuth 2.0 for authorization and access delegation
 
 #Authors : 
  * Simone Righitto
