@@ -1,7 +1,5 @@
-AMT_project1
-=============
-
-Heig-VD AMT_project1 : REST-API
+Heig-VD AMT project1 : REST-API
+===============================
 
 The main project goal is to offer a Software-as-a-Service (SaaS) platform to organizations.
 
@@ -15,9 +13,9 @@ We have decided to generate some kinde of facts (daily facts : to find out stati
   * Install Glassfish
   * Install NetBeans
   * Install Wamp (if you are running Windows) or the version for you OS (Linux : Lamp, Mac : Mamp)
-  * Adapt the pathes in the script autoConfiScript.sh or you can create a "ConnectionPool" and a "JDBC with "asadmin" directly, you can find the names of all the elements in the script
-  * Start the domain with asadmin
-  * Start Netbeans and start the project
+  * Run the setup.sh script to create a glassfish domain (domainAMT), a "ConnectionPool" and a "JDBC" resource to "connect" the database with the domainAMT previously created. WARNING ! Before running the script you will have to modify some path variable inside the script. Open it up with a text editor and modify the path you need to modify.
+  * Start the domain with asadmin (inside glassfish/bin directory run ./asadmin start-domain domainAMT)
+  * Start Netbeans, import the project and run it !
  
 # Test Data
   * The application contains already some data, so you can test and try the API
@@ -25,7 +23,7 @@ We have decided to generate some kinde of facts (daily facts : to find out stati
   * You can populate the "Observations" with the script populateAPI.js and Node.js, it will create X observations. You can directly modify X and others parameters in the file.
 
 #Documentation
-You can find the detailled documentation about our API here : http://mellymello.github.io/AMT-ProjectREST
+Go on http://HEROKUAPP HEREEEE !!!!!!!!!!!!!!!!!! to see our API documentation
 
 #Authors : 
  * Simone Righitto
