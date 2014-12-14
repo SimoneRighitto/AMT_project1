@@ -5,7 +5,6 @@
 
 package ch.heigvd.amt.amt_api_project.dto;
 
-import ch.heigvd.amt.amt_api_project.model.Organization;
 
 /**
  *

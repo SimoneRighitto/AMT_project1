@@ -18,23 +18,27 @@ import javax.persistence.Table;
  *
  * @author Simone Righitto
  */
-@Table(name="Fact")
+@Table(name = "Fact")
 @NamedQueries(
         {
             @NamedQuery(
                     name = "findAllFacts",
                     query = "SELECT f FROM Fact f"
+            ),
+            @NamedQuery(
+                    name = "findFactsBySensorId",
+                    query = "SELECT f FROM Fact f WHERE f.id = :sensorId"
             )
+
         }
 )
 
 @Entity
-public class Fact implements Serializable {
+public abstract class Fact implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String information;
     private String type;
     private String visibility;
     @ManyToOne
@@ -43,9 +47,8 @@ public class Fact implements Serializable {
     public Fact() {
     }
 
-    public Fact(String information, String type, String visibility, Organization organizationOwner) {
-     
-        this.information = information;
+    public Fact(String type, String visibility, Organization organizationOwner) {
+
         this.type = type;
         this.visibility = visibility;
         this.organizationOwner = organizationOwner;
@@ -57,14 +60,6 @@ public class Fact implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getInformation() {
-        return information;
-    }
-
-    public void setInformation(String information) {
-        this.information = information;
     }
 
     public String getType() {

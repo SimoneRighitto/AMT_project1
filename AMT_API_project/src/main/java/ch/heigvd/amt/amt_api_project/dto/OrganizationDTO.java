@@ -5,9 +5,7 @@
 
 package ch.heigvd.amt.amt_api_project.dto;
 
-import ch.heigvd.amt.amt_api_project.model.Fact;
-import ch.heigvd.amt.amt_api_project.model.Sensor;
-import ch.heigvd.amt.amt_api_project.model.User;
+
 import java.util.List;
 
 /**

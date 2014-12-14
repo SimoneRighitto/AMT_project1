@@ -54,8 +54,7 @@ public class ObservationResource {
         Observation newObservation = new Observation();
         long id = observationManager.createObservation(toObservation(dtoObservation, newObservation));
         return id;
-        
-        //here we can create / update facts... we also have to remove facts from the api
+       
     }
     
     

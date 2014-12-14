@@ -6,6 +6,7 @@
 package ch.heigvd.amt.amt_api_project.services;
 
 import ch.heigvd.amt.amt_api_project.model.Fact;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -17,7 +18,15 @@ import javax.ejb.Local;
 public interface FactsManagerLocal {
 
     public List<Fact> findAllFacts();
-
+    
+    public List<Fact> findFactsBySensorId(long sensorId);
+       
+    public Fact findFactBySensorIdAndDate(long sensorId, Date day);
+    
+    public Fact findCounterFactBySensorId(long sensorId);
+    
+    public int getObservationsNumberForSensor(long sensorId);
+    
     public Fact findFactByID(long id);
 
     public long createFact(Fact toFact);

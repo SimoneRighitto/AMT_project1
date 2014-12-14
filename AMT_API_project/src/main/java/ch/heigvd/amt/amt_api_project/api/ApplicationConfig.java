@@ -11,7 +11,7 @@ import javax.ws.rs.core.Application;
  *
  * @author Simone Righitto
  */
-@javax.ws.rs.ApplicationPath("api")
+@javax.ws.rs.ApplicationPath("api/v1")
 public class ApplicationConfig extends Application {
 
     @Override
@@ -22,7 +22,6 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(ch.heigvd.amt.amt_api_project.api.FactResource.class);
         resources.add(ch.heigvd.amt.amt_api_project.api.ObservationResource.class);
         resources.add(ch.heigvd.amt.amt_api_project.api.OrganizationResource.class);
         resources.add(ch.heigvd.amt.amt_api_project.api.SensorResource.class);
