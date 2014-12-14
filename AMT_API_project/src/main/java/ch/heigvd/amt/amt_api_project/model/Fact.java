@@ -5,6 +5,8 @@
 package ch.heigvd.amt.amt_api_project.model;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,29 +14,30 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Simone Righitto
  */
-@Table(name = "Fact")
 @NamedQueries(
         {
             @NamedQuery(
                     name = "findAllFacts",
                     query = "SELECT f FROM Fact f"
             ),
+           
             @NamedQuery(
-                    name = "findFactsBySensorId",
-                    query = "SELECT f FROM Fact f WHERE f.id = :sensorId"
-            )
-
-        }
-)
+                    name = "findFactBySensorIdAndType",
+                    query = "SELECT f FROM Fact f WHERE f.sensor.id = :sensorId AND f.type = :type"),
+            @NamedQuery(
+                    name = "findFactBySensorIdAndTypeAndDate",
+                    query = "SELECT f FROM Fact f WHERE f.sensor.id = :sensorId AND f.type = :type AND f.dayDate = :date")
+        })
 
 @Entity
-public abstract class Fact implements Serializable {
+public class Fact implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,6 +46,12 @@ public abstract class Fact implements Serializable {
     private String visibility;
     @ManyToOne
     private Organization organizationOwner;
+    
+    private HashMap infos;
+    @ManyToOne
+    private Sensor sensor;
+    @Temporal(TemporalType.DATE)
+    private Date dayDate;
 
     public Fact() {
     }
@@ -53,6 +62,15 @@ public abstract class Fact implements Serializable {
         this.visibility = visibility;
         this.organizationOwner = organizationOwner;
     }
+
+    public Fact(String type, String visibility, Organization organizationOwner, Sensor sensor, Date dayDate) {
+        this.type = type;
+        this.visibility = visibility;
+        this.organizationOwner = organizationOwner;
+        this.sensor = sensor;
+        this.dayDate = dayDate;
+    }
+    
 
     public long getId() {
         return id;
@@ -86,4 +104,29 @@ public abstract class Fact implements Serializable {
         this.organizationOwner = organizationOwner;
     }
 
+    public HashMap getInfos() {
+        return infos;
+    }
+
+    public void setInfos(HashMap infos) {
+        this.infos = infos;
+    }
+
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+
+    public Date getDayDate() {
+        return dayDate;
+    }
+
+    public void setDayDate(Date dayDate) {
+        this.dayDate = dayDate;
+    }
+
+   
 }

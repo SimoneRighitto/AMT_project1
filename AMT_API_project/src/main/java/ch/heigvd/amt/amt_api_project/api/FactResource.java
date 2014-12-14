@@ -4,12 +4,12 @@
  */
 package ch.heigvd.amt.amt_api_project.api;
 
-import ch.heigvd.amt.amt_api_project.dto.DailyFactDTO;
+
 import ch.heigvd.amt.amt_api_project.dto.FactDTO;
-import ch.heigvd.amt.amt_api_project.model.DailyFact;
 import ch.heigvd.amt.amt_api_project.model.Fact;
 import ch.heigvd.amt.amt_api_project.services.FactsManagerLocal;
 import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
+import ch.heigvd.amt.amt_api_project.services.SensorsManagerLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -35,6 +35,9 @@ public class FactResource {
     
     @EJB
     OrganizationManagerLocal organizationManager;
+    
+    @EJB
+    SensorsManagerLocal sensorManager;
 
     @Context
     private UriInfo context;
@@ -89,22 +92,30 @@ public class FactResource {
     /*
      * Conversion utility methods
      */
-    private DailyFact toDailyFact(DailyFactDTO dtoFact, DailyFact originalFact) {
+    private Fact toFact(FactDTO dtoFact, Fact originalFact) {
         originalFact.setId(dtoFact.getId());
         originalFact.setType(dtoFact.getType());
         originalFact.setVisibility(dtoFact.getVisibility());
         originalFact.setOrganizationOwner(organizationManager.findOrganizationByID(dtoFact.getOrganizationOwnerId()));
         
+        originalFact.setDayDate(dtoFact.getDayDate());
+        originalFact.setInfos(dtoFact.getInfos());
+        originalFact.setSensor(sensorManager.findSensorByID(dtoFact.getSensorId()));
+      
+        
         return originalFact;
     }
 
-    private DailyFactDTO toDTO(DailyFact fact) {
+    private FactDTO toDTO(Fact fact) {
         FactDTO dtoFact=  new FactDTO();
         dtoFact.setId(fact.getId());
-        dtoFact.setInformation(fact.getInformation());
         dtoFact.setType(fact.getType());
         dtoFact.setVisibility(fact.getVisibility());
-        dtoFact.setOrganizationOwner(fact.getOrganizationOwner().getId());
+        dtoFact.setOrganizationOwnerId(fact.getOrganizationOwner().getId());
+        
+        dtoFact.setDayDate(fact.getDayDate());
+        dtoFact.setInfos(fact.getInfos());
+        dtoFact.setSensorId(fact.getSensor().getId());
         
         return dtoFact;
     }

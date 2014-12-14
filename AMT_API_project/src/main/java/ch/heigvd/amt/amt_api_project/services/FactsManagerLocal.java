@@ -20,11 +20,10 @@ public interface FactsManagerLocal {
     
     public List<Fact> findFactsBySensorId(long sensorId);
        
-    public Fact findFactBySensorIdAndDate(long sensorId, Date day);
     
-    public Fact findCounterFactBySensorId(long sensorId);
+    public Fact findFactBySensorIdAndType(long sensorId, String type);
+    public Fact findFactBySensorIdAndTypeAndDate(long sensorId, String type, Date date);
     
-    public int getObservationsNumberForSensor(long sensorId);
     
     public Fact findFactByID(long id);
 

@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -71,24 +72,18 @@ public class FactsManager implements FactsManagerLocal {
     }
 
     @Override
-    public Fact findFactBySensorIdAndDate(long sensorId, Date day) {
+    public Fact findFactBySensorIdAndType(long sensorId, String type) {
         try {
-            return (Fact) em.createNamedQuery("findFactBySensorIdAndDate").setParameter("sensorId", sensorId).setParameter("day", day).getSingleResult();
+            return (Fact) em.createNamedQuery("findFactBySensorIdAndType").setParameter("sensorId", sensorId).setParameter("type", type).getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
     }
 
     @Override
-    public int getObservationsNumberForSensor(long sensorId) {
-
-        return em.createNamedQuery("getObservationsNumberForSensor").setParameter("sensorId", sensorId).getFirstResult();
-    }
-
-    @Override
-    public Fact findCounterFactBySensorId(long sensorId) {
-       try {
-            return (Fact) em.createNamedQuery("findCounterFactBySensorId").setParameter("sensorId", sensorId).getSingleResult();
+    public Fact findFactBySensorIdAndTypeAndDate(long sensorId, String type, Date date) {
+        try {
+            return (Fact) em.createNamedQuery("findFactBySensorIdAndTypeAndDate").setParameter("sensorId", sensorId).setParameter("type", type).setParameter("date", date, TemporalType.DATE).getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }

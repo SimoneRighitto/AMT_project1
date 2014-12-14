@@ -4,6 +4,9 @@
  */
 package ch.heigvd.amt.amt_api_project.dto;
 
+import java.util.Date;
+import java.util.HashMap;
+
 /**
  *
  * @author Simone Righitto
@@ -14,15 +17,20 @@ public class FactDTO {
     private String type;
     private String visibility;
     private long organizationOwnerId;
+  
+    private HashMap infos;
+    private long sensorId;
+    private Date dayDate;
 
     public FactDTO() {
     }
 
-    public FactDTO(long id, String type, String visibility, long organizationOwnerId) {
+    public FactDTO(long id, String type, String visibility, long organizationOwnerId, long sensorId) {
         this.id = id;
         this.type = type;
         this.visibility = visibility;
         this.organizationOwnerId = organizationOwnerId;
+        this.sensorId = sensorId;
     }
 
     public long getId() {
@@ -53,8 +61,33 @@ public class FactDTO {
         return organizationOwnerId;
     }
 
-    public void setOrganizationOwner(long organizationOwnerId) {
+    public void setOrganizationOwnerId(long organizationOwnerId) {
         this.organizationOwnerId = organizationOwnerId;
     }
 
+    public HashMap<String, String> getInfos() {
+        return infos;
+    }
+
+    public void setInfos(HashMap<String, String> infos) {
+        this.infos = infos;
+    }
+
+    public long getSensorId() {
+        return sensorId;
+    }
+
+    public void setSensorId(long sensorId) {
+        this.sensorId = sensorId;
+    }
+
+    public Date getDayDate() {
+        return dayDate;
+    }
+
+    public void setDayDate(Date dayDate) {
+        this.dayDate = dayDate;
+    }
+
+   
 }
