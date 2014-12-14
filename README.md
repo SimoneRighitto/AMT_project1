@@ -17,10 +17,10 @@ We have decided to generate some kinde of facts (daily facts : to find out stati
   * Start the domain with asadmin (inside glassfish/bin directory run ./asadmin start-domain domainAMT)
   * Start Netbeans, import the project and run it !
  
-# Test Data
-  * The application contains already some data, so you can test and try the API
-  * If you go to : localhost:8080/amtProject/v1/api/generate, the data will be generetad for you.
-  * You can populate the "Observations" with the script populateAPI.js and Node.js, it will create X observations. You can directly modify X and others parameters in the file.
+# Play with the API
+  * If you go to : http://localhost:8080/AMT_API_project/api/v1/generate, some basic data (organizations,users,sensors, and also some test observations) will be generetad for you.
+  * You can populate the "Observations" with the script amtPopulate.js and Node.js. This script will simulate a sensor sending out observation data.
+  * You can modify the script to generate some personal test observation in order to get familiar with the API
 
 #Documentation
 Go on https://hidden-savannah-5396.herokuapp.com/ to see our API documentation
@@ -28,6 +28,7 @@ Go on https://hidden-savannah-5396.herokuapp.com/ to see our API documentation
 # TO DO
 Here a list of what we are goingo to implement in a future:
   * We will performs security checks to ensure that the observation is valid
+  * We have to implement the visibility of private/public resources (right now everyone can see private things)
 
 #Authors : 
  * Simone Righitto
