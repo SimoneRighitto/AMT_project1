@@ -25,9 +25,9 @@ We have decided to generate some kinde of facts (daily facts : to find out stati
 #Documentation
 Go on http://HEROKUAPP HEREEEE !!!!!!!!!!!!!!!!!! to see our API documentation
 
-#TO DO
-Here a list of what we are goingo to implement in a future
- *We will performs security checks to ensure that the observation is valid
+# TO DO
+Here a list of what we are goingo to implement in a future:
+  * We will performs security checks to ensure that the observation is valid
 
 #Authors : 
  * Simone Righitto
