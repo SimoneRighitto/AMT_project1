@@ -7,14 +7,14 @@ package ch.heigvd.amt.amt_api_project.services;
 import ch.heigvd.amt.amt_api_project.model.Fact;
 import ch.heigvd.amt.amt_api_project.model.Observation;
 import ch.heigvd.amt.amt_api_project.model.Sensor;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -73,32 +73,21 @@ public class ObservationsManager implements ObservationsManagerLocal {
         Fact dailyFact = factManager.findFactBySensorIdAndTypeAndDate(sourceSensor.getId(), "daily", new Date());
         if (dailyFact != null) {
             //only update
-//            List<Double> oldValue = f1.getInfo();
-//            List<Double> newValue = new LinkedList<>();
-//            Double min = oldValue.get(0);
-//            Double max = oldValue.get(1);
-//            Double avg = oldValue.get(2);
-//            if (observation.getValue() < min) {
-//                min = observation.getValue();
-//            } else if (observation.getValue() > max) {
-//                max = observation.getValue();
-//            }
-//            avg = findAverageObservationForOneDay(observation.getSensor());
-//            newValue.add(min);
-//            newValue.add(max);
-//            newValue.add(avg);
-//            f1.setInfo(newValue);
-            
             HashMap<String, Double> dailyInfos = dailyFact.getInfos();
-            double oldMin= dailyInfos.get("min");
-            double oldMax= dailyInfos.get("max");
-            double oldAvg= dailyInfos.get("avg");
+            double oldMin = dailyInfos.get("min");
+            double oldMax = dailyInfos.get("max");
             
+
             double newValue = observation.getObservedValue();
-            
+
             dailyInfos.put("min", (oldMin < newValue) ? oldMin : newValue);
-            dailyInfos.put("max", (newValue > oldMax) ? newValue: oldMax);
+            dailyInfos.put("max", (newValue > oldMax) ? newValue : oldMax);
+            dailyInfos.put("avg", findAverageObservationByDay(sourceSensor.getId()));
+           
             
+            dailyFact.setInfos(dailyInfos);
+            factManager.updateFact(dailyFact);
+
         } else {
             //create a new DailyFact
             HashMap<String, Double> dailyInfos = new HashMap();
@@ -113,5 +102,34 @@ public class ObservationsManager implements ObservationsManagerLocal {
 
         return observation.getId();
 
+    }
+
+    @Override
+    public Double findAverageObservationByDay(long sensorId) {
+        Date start = getStartOfDay(new Date());
+        Date end = getEndOfDay(new Date());
+        return (Double) em.createNamedQuery("findAverageObservationByDay").setParameter("sensorId", sensorId).setParameter("start", start, TemporalType.TIMESTAMP).setParameter("end", end, TemporalType.TIMESTAMP).getSingleResult();
+    }
+
+    //utility functions to get the time space of one day in order to be able to obtain averages values for observations
+    //http://stackoverflow.com/questions/10308356/how-to-obtain-the-start-time-and-end-time-of-a-day
+    private Date getEndOfDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTime();
+    }
+
+    private Date getStartOfDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
 }

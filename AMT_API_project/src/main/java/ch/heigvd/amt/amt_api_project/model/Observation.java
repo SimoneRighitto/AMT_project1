@@ -2,7 +2,6 @@
  * Developped for study purposes at Heig-VD.ch
  * Created: 20-nov-2014
  */
-
 package ch.heigvd.amt.amt_api_project.model;
 
 import java.io.Serializable;
@@ -12,15 +11,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 
 /**
  *
  * @author Simone Righitto
  */
-@Table(name="observation")
-
+@NamedQueries({
+    @NamedQuery(
+            name = "findAllObservations",
+            query = "SELECT o FROM Observation o"),
+    @NamedQuery(
+            name = "findAverageObservationByDay",
+            query = "SELECT AVG(o.observedValue) FROM Observation o WHERE o.sourceSensor.id = :sensorId AND o.observedAt BETWEEN :start AND :end")
+})
 @Entity
 public class Observation implements Serializable {
 
@@ -32,13 +38,12 @@ public class Observation implements Serializable {
     private double observedValue;
     @ManyToOne
     private Sensor sourceSensor;
-    
 
     public Observation() {
     }
 
     public Observation(Date time, double value, Sensor sourceSensor) {
-       
+
         this.observedAt = time;
         this.observedValue = value;
         this.sourceSensor = sourceSensor;
@@ -75,7 +80,5 @@ public class Observation implements Serializable {
     public void setSourceSensor(Sensor sourceSensor) {
         this.sourceSensor = sourceSensor;
     }
-    
-   
-    
+
 }

@@ -13,6 +13,7 @@ import ch.heigvd.amt.amt_api_project.services.SensorsManagerLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,6 +29,8 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Maillard
  */
+@Path("facts")
+@Stateless
 public class FactResource {
     
     @EJB

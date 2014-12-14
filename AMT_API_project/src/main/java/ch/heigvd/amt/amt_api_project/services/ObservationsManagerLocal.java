@@ -15,6 +15,8 @@ import javax.ejb.Local;
 public interface ObservationsManagerLocal {
 
     public Observation findObservationByID(long id);
+    
+    public Double findAverageObservationByDay(long sensorId);
 
     public long createObservation(Observation toObservation);
 
