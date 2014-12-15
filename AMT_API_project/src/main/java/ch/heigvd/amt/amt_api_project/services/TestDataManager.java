@@ -5,11 +5,10 @@
 package ch.heigvd.amt.amt_api_project.services;
 
 import ch.heigvd.amt.amt_api_project.model.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -34,6 +33,10 @@ public class TestDataManager implements TestDataManagerLocal {
 
     @Override
     public void generateTestData() {
+
+        /**
+         * Heig-Vd organization test
+         */
         // Let's create a first test organization
         Organization heigVd = new Organization("heigVd");
         long heigVdId = organizationManager.createOrganization(heigVd);
@@ -57,6 +60,22 @@ public class TestDataManager implements TestDataManagerLocal {
             heigVdSensors.add(sensorManager.createSensor(new Sensor("s" + i, "testSensor" + i, "meteo", "public", heigVd)));
         }
 
+        //finally let's generate some observations:
+        Date d = new Date(); //just for test we let the date empty
+        Random r = new Random();
+        double randomValue;
+        int randomNbrOfObservations;
+        for (Long s : heigVdSensors) {
+            randomNbrOfObservations = r.nextInt(5);
+            for (int i = 0; i < randomNbrOfObservations; i++) {
+                randomValue = -15 + (40 - 15) * r.nextDouble();
+                observationManger.createObservation(new Observation(d, randomValue, sensorManager.findSensorByID(s)));
+            }
+        }
+
+        /**
+         * Police organization test
+         */
         // Let's create a second test organization
         Organization policeVd = new Organization("policeVd");
         long policeVdId = organizationManager.createOrganization(policeVd);
@@ -80,9 +99,8 @@ public class TestDataManager implements TestDataManagerLocal {
             policeVdSensors.add(sensorManager.createSensor(new Sensor("r" + i, "radar" + i, "speed", "private", policeVd)));
         }
 
-        
-        Date d = new Date();
-        Observation o1 = new Observation(d, 120.0, sensorManager.findSensorByID(policeVdSensors.get(0)));
+        //Just flashing some people on the highway ;-)
+        Observation o1 = new Observation(d, 150.0, sensorManager.findSensorByID(policeVdSensors.get(0)));
         Observation o2 = new Observation(d, 180.0, sensorManager.findSensorByID(policeVdSensors.get(0)));
         observationManger.createObservation(o1);
         observationManger.createObservation(o2);
