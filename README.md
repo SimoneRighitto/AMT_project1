@@ -3,10 +3,7 @@ Heig-VD AMT project1 : REST-API
 
 The main project goal is to offer a Software-as-a-Service (SaaS) platform to organizations.
 
-Our API is designed for organizations that use sensors to capture data.
-The organization using our API can manage itself (name, person of contact, ...) but also the resources that are disponible in the organization like the users and the sensors.
-Organization sensors will generate observations that are also managed via the API.
-We have decided to generate some kinde of facts (daily facts : to find out statiscit of the daily work of a specific sensor, or counter fact : that are facts following the number of observation provided by a sensor) based on observations.
+Our API is designed for organizations that use sensors to capture data. The organization using our API can manage itself (name, person of contact, ...) but also the resources that are available in the organization like the users and the sensors. Organization sensors will generate observations that are also managed via the API. We have decided to generate some kind of facts (daily facts : to find out statistic of the daily work of a specific sensor, or counter fact : that are facts following the number of observation provided by a sensor) based on observations
 
 #Installation
   * git clone https://github.com/SimoneRighitto/AMT_project1.git
@@ -18,7 +15,7 @@ We have decided to generate some kinde of facts (daily facts : to find out stati
   * Start Netbeans, import the project and run it !
  
 # Play with the API
-  * If you go to : http://localhost:8080/AMT_API_project/api/v1/generate, some basic data (organizations,users,sensors, and also some test observations) will be generetad for you.
+  * If you go to : http://localhost:8080/AMT_API_project/api/v1/generate, some basic data (organizations,users,sensors, and also some test observations) will be generated for you.
   * You can populate the "Observations" with the script amtPopulate.js and Node.js. This script will simulate a sensor sending out observation data.
   * You can modify the script to generate some personal test observation in order to get familiar with the API
 
