@@ -1,0 +1,3 @@
+calcul des facts
++ 
+preuve des facts dans le script client node
