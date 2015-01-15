@@ -7,7 +7,7 @@ var fs = require('fs');
 var post_options_observations = {
   host: 'localhost',
   port: '8080',
-  path: '/AMT_API_project/api/observations/',
+  path: '/AMT_API_project/api/v1/observations/',
   method: 'POST',
   headers: {
 	  'Content-Type': 'application/json'
