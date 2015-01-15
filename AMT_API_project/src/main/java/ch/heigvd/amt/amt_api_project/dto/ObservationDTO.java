@@ -48,11 +48,11 @@ public class ObservationDTO {
         this.value = value;
     }
 
-    public long getSourceSensor() {
+    public long getSourceSensorId() {
         return sourceSensorId;
     }
 
-    public void setSourceSensor(long sourceSensor) {
+    public void setSourceSensorId(long sourceSensor) {
         this.sourceSensorId = sourceSensor;
     }
 }

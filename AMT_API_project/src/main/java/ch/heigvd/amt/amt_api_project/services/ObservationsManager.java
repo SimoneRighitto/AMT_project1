@@ -46,13 +46,10 @@ public class ObservationsManager implements ObservationsManagerLocal {
         em.detach(observation);
 
         Sensor sourceSensor = observation.getSourceSensor();
-        System.out.println("observation -->"+ observation);
-        System.out.println("observation id -->"+ observation.getId());
-        System.out.println("sourceSensor -->"+ sourceSensor);
 
         //managing the CounterFacts
         Fact counterFact = factManager.findFactBySensorIdAndType(sourceSensor.getId(), "counter");
-        System.out.println("counterFact"+ counterFact);
+        
         if (counterFact != null) {
             //only update
             HashMap<String, Double> counterInfos = counterFact.getInfos();

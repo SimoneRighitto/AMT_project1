@@ -70,7 +70,7 @@ function getObservationPOSTRequestFunction(sourceSensorId) {
 			data: {
 				'time' : new Date().toJSON(),
 				'value': 0,
-				'sourceSensorId' : 41 
+				'sourceSensorId' : 6 
 			}
 		};
 		
@@ -136,7 +136,7 @@ function postObservationRequestsInParallel(callback) {
 				numberOfUnsuccessfulResponses++;
 			} else {
 				logObservation(processedStats, results[i].requestData.data);
-				logDailyObservation(processedDailyStats, requestData.data);
+				logDailyObservation(processedDailyStats, results[i].requestData.data);
 			}
 		}
 		callback(null, results.length + " observation POSTs have been sent. " + numberOfUnsuccessfulResponses + " have failed.");
@@ -172,12 +172,6 @@ function checkValues(callback) {
 		}
 		
 		for (var i=0; i<data.length; i++) {
-
-
-    
-
-
-	
 	
 			var factSourceSensorId = data[i].sensorId;
 			var factType = data[i].type;
@@ -195,6 +189,13 @@ function checkValues(callback) {
 				}
 			}
 			else if(factType == "daily"){
+			
+			
+			//
+			//TO DO
+			//
+			//
+			
 			}
 			else{
 				consol.log("Error : unknown fact type");

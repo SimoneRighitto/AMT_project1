@@ -65,7 +65,8 @@ public class ObservationResource {
         originalObservation.setId(dtoObservation.getId());
         originalObservation.setObservedAt(dtoObservation.getTime());
         originalObservation.setObservedValue(dtoObservation.getValue());
-        originalObservation.setSourceSensor(sensorsManager.findSensorByID(dtoObservation.getSourceSensor()));
+        originalObservation.setSourceSensor(sensorsManager.findSensorByID(dtoObservation.getSourceSensorId()));
+     
         
         return originalObservation;
     }
@@ -75,7 +76,7 @@ public class ObservationResource {
         dtoObservation.setId(observation.getId());
         dtoObservation.setTime(observation.getObservedAt());
         dtoObservation.setValue(observation.getObservedValue());
-        dtoObservation.setSourceSensor(observation.getSourceSensor().getId());
+        dtoObservation.setSourceSensorId(observation.getSourceSensor().getId());
         
         return dtoObservation;
     }
