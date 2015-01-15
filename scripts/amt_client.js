@@ -16,21 +16,44 @@ var async = require('async');
 // In this case, the client is informed that the observation has failed and it would be his responsibility
 // to retry.
 var submittedStats = {}
+var submittedDailyStats = {}
 
 // This map keeps track of the observations posted by the client, but only if the server has confirmed
 // their processing with a successful status code. 
 // In this case, the client can assume that the observation has been successfully processed.
 var processedStats = {};
+var processedDailyStats = {}
+
 
 function logObservation(stats, observation) {
 	var factStats = stats[observation.sourceSensorId] || {
 		sourceSensorId: observation.sourceSensorId,
 		numberOfObservations: 0,
-		averageValue : 0
+		};
+	factStats.numberOfObservations += 1;
+	stats[observation.sourceSensorId] = factStats;
+}
+
+function logDailyObservation(stats, observation) {
+	var key = "k" + observation.sourceSensorId +":"+ observation.time.substring(0,10); 
+	//console.log(key);
+	var factStats = stats[key] || {
+		sourceSensorId: observation.sourceSensorId,
+		numberOfObservations: 0,
+		averageValue : 0,
+		minValue : 0,
+		maxValue : 0
+		
 		};
 	factStats.numberOfObservations += 1;
 	factStats.averageValue += observation.value;   // check if its right....divide ???
-	stats[observation.sourceSensorId] = factStats;
+	if(observation.value < factStats.minValue){
+		factStats.minValue= observation.value;
+	}
+	if(observation.value > factStats.maxValue){
+		factStats.maxValue= observation.value;
+	}
+	stats[key] = factStats;
 }
 
 
@@ -47,12 +70,15 @@ function getObservationPOSTRequestFunction(sourceSensorId) {
 			data: {
 				'time' : new Date().toJSON(),
 				'value': 0,
-				'sourceSensorId' : 1 
+				'sourceSensorId' : 41 
 			}
 		};
 		
 		requestData.data.value = Math.floor((Math.random() * 200) - 50);
+		//randomize data
 		logObservation(submittedStats, requestData.data);
+		logDailyObservation(submittedDailyStats, requestData.data);
+		
 		
 		client.post("http://localhost:8080/AMT_API_project/api/v1/observations", requestData, function(data, response) {
 			var error = null;
@@ -71,7 +97,7 @@ function getObservationPOSTRequestFunction(sourceSensorId) {
  */
 var requests = [];
 
-for (var fact=1; fact<=20; fact++) {
+for (var fact=1; fact<=2; fact++) {
 	for (var observation=0; observation<60; observation++) {
 		requests.push(
 			getObservationPOSTRequestFunction(fact)
@@ -83,6 +109,7 @@ for (var fact=1; fact<=20; fact++) {
 /*
  * Reset server side - this will delete all facts
  */
+/* 
 function resetServerState(callback) {
 	console.log("\n\n==========================================");
 	console.log("POSTing RESET command.");
@@ -92,6 +119,7 @@ function resetServerState(callback) {
 		callback(null, "The RESET operation has been processed (status code: " + response.statusCode + ")");
 	});
 };
+*/
 
 /*
  * POST observation requests in parallel
@@ -108,6 +136,7 @@ function postObservationRequestsInParallel(callback) {
 				numberOfUnsuccessfulResponses++;
 			} else {
 				logObservation(processedStats, results[i].requestData.data);
+				logDailyObservation(processedDailyStats, requestData.data);
 			}
 		}
 		callback(null, results.length + " observation POSTs have been sent. " + numberOfUnsuccessfulResponses + " have failed.");
@@ -126,26 +155,52 @@ function checkValues(callback) {
 			"Accept": "application/json"
 		}
 	};
-	client.get("http://localhost:8080/ConcurrentUpdateDemo/api/facts", requestData, function(data, response) {
+	client.get("http://localhost:8080/AMT_API_project/api/v1/facts", requestData, function(data, response) {
 		var numberOfErrors = 0;
-		var clientSideAccounts = Object.keys(submittedStats).length;
-		var serverSideAccounts = data.length;
-		console.log("Number of facts on the client side: " + clientSideAccounts);
-		console.log("Number of facts on the server side: " + serverSideAccounts);
-		if (clientSideAccounts !== serverSideAccounts) {
+		
+		var clientSideCounterFacts = Object.keys(submittedStats).length;
+		var clientSideDailyFacts = Object.keys(submittedDailyStats).length;
+		var clientSideFacts = clientSideCounterFacts+clientSideDailyFacts;
+		var serverSideFacts = data.length;
+		var serverSideCounterFacts = 0;
+		var serverSideDailyFacts = 0;
+		
+		console.log("Number of facts on the client side: " + clientSideFacts);
+		console.log("Number of facts on the server side: " + serverSideFacts);
+		if ( clientSideFacts !== serverSideFacts) {
 			numberOfErrors++;
 		}
 		
 		for (var i=0; i<data.length; i++) {
-			var sourceSensorId = data[i].id;
-			var serverSideValue = data[i].balance;
-			var clientSideValue = processedStats[sourceSensorId].balance;
-			if (clientSideValue !== serverSideValue) {
+
+
+    
+
+
+	
+	
+			var factSourceSensorId = data[i].sensorId;
+			var factType = data[i].type;
+			var factDayDate = data[i].dayDate;
+			var factInfo = data[i].infos;
+			
+			if(factType == "counter"){
+				var serverSideNumberOfObservations = factInfo["obsCounter"];
+				var clientSideNumberOfObservations = processedStats[factSourceSensorId];
+				if (serverSideNumberOfObservations !== clientSideNumberOfObservations) {
 				numberOfErrors++;
-				console.log("Account " + sourceSensorId + " --> Server/Client balance: " + serverSideValue + "/" + clientSideValue + "  X");
-			} else {
-				//console.log("Account " + sourceSensorId + " --> Server/Client balance: " + serverSideValue + "/" + clientSideValue);				
+				console.log("Sensor " + factSourceSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations + "  X");
+				} else {
+				//console.log("Sensor " + factSourceSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations");				
+				}
 			}
+			else if(factType == "daily"){
+			}
+			else{
+				consol.log("Error : unknown fact type");
+			}
+			
+		
 			
 		}
 		
@@ -154,7 +209,7 @@ function checkValues(callback) {
 }
 
 async.series([
-	resetServerState,
+	//resetServerState,
 	postObservationRequestsInParallel,
 	checkValues
 ], function(err, results) {
@@ -164,4 +219,7 @@ async.series([
 	//console.log(err);
 	console.log(results);
 });
+
+
+
 	
