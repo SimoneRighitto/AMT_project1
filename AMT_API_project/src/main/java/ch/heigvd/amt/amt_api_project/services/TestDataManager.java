@@ -115,8 +115,17 @@ public class TestDataManager implements TestDataManagerLocal {
         factManager.deleteAll();
         observationManger.deleteAll();
         sensorManager.deleteAll();
+        
+        //hack to resolve database  foreign key problems
+        List<Organization> allOrg= organizationManager.findAllOrganization();
+        for (Organization o : allOrg) {
+            o.setContactUser(null);
+            organizationManager.updateOrganization(o);
+        }
+        
         userManger.deleteAll();
         organizationManager.deleteAll();
+        
        
     }
 
