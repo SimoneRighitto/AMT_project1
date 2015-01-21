@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -53,5 +54,11 @@ public class UsersManager implements UsersManagerLocal {
     @Override
     public void deleteUser(long id) {
         em.remove(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        Query query = em.createNamedQuery("User.deleteAll");
+        query.executeUpdate();
     }
 }

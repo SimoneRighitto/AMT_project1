@@ -24,4 +24,6 @@ public interface UsersManagerLocal {
     public void updateUser(User user);
 
     public void deleteUser(long id);
+    
+    void deleteAll();
 }

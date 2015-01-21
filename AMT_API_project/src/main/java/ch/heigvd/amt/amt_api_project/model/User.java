@@ -24,7 +24,8 @@ import javax.persistence.Table;
             @NamedQuery(
                     name = "findAllUsers",
                     query = "SELECT u FROM User u"
-            )
+            ),
+            @NamedQuery(name="User.deleteAll", query="DELETE FROM User")
         }
 )
 

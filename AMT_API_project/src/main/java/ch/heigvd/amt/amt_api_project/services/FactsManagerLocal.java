@@ -33,4 +33,6 @@ public interface FactsManagerLocal {
 
     public void deleteFact(long id);
     
+    void deleteAll();
+    
 }

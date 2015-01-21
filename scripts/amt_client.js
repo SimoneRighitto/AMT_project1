@@ -5,6 +5,7 @@
  
  fact == account 
  observation == transaction  //sur les observation il y a pas de concurrence
+NOT FORGET TO CALL http://localhost:8080/AMT_API_project/api/v1/data/generate
  */
 
 var Client = require('node-rest-client').Client;

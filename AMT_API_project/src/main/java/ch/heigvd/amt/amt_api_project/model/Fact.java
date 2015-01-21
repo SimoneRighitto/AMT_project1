@@ -33,7 +33,8 @@ import javax.persistence.TemporalType;
                     query = "SELECT f FROM Fact f WHERE f.sensor.id = :sensorId AND f.type = :type"),
             @NamedQuery(
                     name = "findFactBySensorIdAndTypeAndDate",
-                    query = "SELECT f FROM Fact f WHERE f.sensor.id = :sensorId AND f.type = :type AND f.dayDate = :date")
+                    query = "SELECT f FROM Fact f WHERE f.sensor.id = :sensorId AND f.type = :type AND f.dayDate = :date"),
+            @NamedQuery(name="Fact.deleteAll", query="DELETE FROM Fact")
         })
 
 @Entity

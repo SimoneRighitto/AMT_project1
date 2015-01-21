@@ -15,4 +15,6 @@ public interface TestDataManagerLocal {
 
     void generateTestData();
     
+    void resetTestData();
+    
 }

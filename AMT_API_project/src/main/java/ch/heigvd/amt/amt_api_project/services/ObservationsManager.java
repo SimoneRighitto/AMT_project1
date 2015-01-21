@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 /**
@@ -110,6 +111,12 @@ public class ObservationsManager implements ObservationsManagerLocal {
         Date start = getStartOfDay(new Date());
         Date end = getEndOfDay(new Date());
         return (Double) em.createNamedQuery("findAverageObservationByDay").setParameter("sensorId", sensorId).setParameter("start", start, TemporalType.TIMESTAMP).setParameter("end", end, TemporalType.TIMESTAMP).getSingleResult();
+    }
+    
+        @Override
+    public void deleteAll() {
+        Query query = em.createNamedQuery("Observation.deleteAll");
+        query.executeUpdate();
     }
 
     //utility functions to get the time space of one day in order to be able to obtain averages values for observations

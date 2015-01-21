@@ -25,7 +25,8 @@ import javax.persistence.OneToOne;
             @NamedQuery(
                     name = "findAll",
                     query = "SELECT o FROM Organization o"
-            )
+            ),
+            @NamedQuery(name="Organization.deleteAll", query="DELETE FROM Organization")
         }
 )
 
@@ -36,13 +37,13 @@ public class Organization implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    @OneToMany(mappedBy = "organizationOwner")
+    @OneToMany(mappedBy = "organizationOwner", orphanRemoval=true)
     private List<Sensor> sensors = new ArrayList<>();
-    @OneToMany(mappedBy = "organization")
+    @OneToMany(mappedBy = "organization", orphanRemoval=true)
     private List<User> users = new ArrayList<>();
-    @OneToOne
+    @OneToOne(orphanRemoval=true)
     private User contactUser;
-    @OneToMany(mappedBy = "organizationOwner")
+    @OneToMany(mappedBy = "organizationOwner", orphanRemoval=true)
     private List<Fact> facts = new ArrayList<>();
 
     public Organization() {

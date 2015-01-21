@@ -19,5 +19,7 @@ public interface ObservationsManagerLocal {
     public Double findAverageObservationByDay(long sensorId);
 
     public long createObservation(Observation toObservation);
+    
+    void deleteAll();
 
 }

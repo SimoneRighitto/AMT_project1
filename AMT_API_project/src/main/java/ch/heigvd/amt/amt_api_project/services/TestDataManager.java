@@ -30,6 +30,9 @@ public class TestDataManager implements TestDataManagerLocal {
 
     @EJB
     private ObservationsManagerLocal observationManger;
+    
+    @EJB
+    private FactsManagerLocal factManager;
 
     @Override
     public void generateTestData() {
@@ -104,6 +107,17 @@ public class TestDataManager implements TestDataManagerLocal {
         Observation o2 = new Observation(d, 180.0, sensorManager.findSensorByID(policeVdSensors.get(0)));
         observationManger.createObservation(o1);
         observationManger.createObservation(o2);
+    }
+
+    @Override
+    public void resetTestData() {
+       
+        factManager.deleteAll();
+        observationManger.deleteAll();
+        sensorManager.deleteAll();
+         userManger.deleteAll();
+        organizationManager.deleteAll();
+       
     }
 
 }

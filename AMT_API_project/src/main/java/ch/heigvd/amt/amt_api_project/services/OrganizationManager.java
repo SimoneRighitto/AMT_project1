@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -54,5 +55,11 @@ public class OrganizationManager implements OrganizationManagerLocal {
     @Override
     public void deleteOrganization(long id) {
         em.remove(id);
+    }
+    
+        @Override
+    public void deleteAll() {
+        Query query = em.createNamedQuery("Organization.deleteAll");
+        query.executeUpdate();
     }
 }

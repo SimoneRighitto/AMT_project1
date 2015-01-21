@@ -24,4 +24,6 @@ public interface OrganizationManagerLocal {
     public void updateOrganization(Organization organization);
 
     public void deleteOrganization(long id);
+    
+    void deleteAll();
 }

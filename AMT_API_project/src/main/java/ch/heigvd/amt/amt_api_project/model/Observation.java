@@ -25,7 +25,8 @@ import javax.persistence.Temporal;
             query = "SELECT o FROM Observation o"),
     @NamedQuery(
             name = "findAverageObservationByDay",
-            query = "SELECT AVG(o.observedValue) FROM Observation o WHERE o.sourceSensor.id = :sensorId AND o.observedAt BETWEEN :start AND :end")
+            query = "SELECT AVG(o.observedValue) FROM Observation o WHERE o.sourceSensor.id = :sensorId AND o.observedAt BETWEEN :start AND :end"),
+    @NamedQuery(name="Observation.deleteAll", query="DELETE FROM Observation")
 })
 @Entity
 public class Observation implements Serializable {

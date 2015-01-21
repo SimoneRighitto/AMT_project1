@@ -8,6 +8,7 @@ import ch.heigvd.amt.amt_api_project.model.Sensor;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -47,5 +48,11 @@ public class SensorsManager implements SensorsManagerLocal {
     @Override
     public void deleteSensor(long id) {
         em.remove(id);
+    }
+    
+        @Override
+    public void deleteAll() {
+        Query query = em.createNamedQuery("Sensor.deleteAll");
+        query.executeUpdate();
     }
 }
