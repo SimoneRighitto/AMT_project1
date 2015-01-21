@@ -115,7 +115,7 @@ public class TestDataManager implements TestDataManagerLocal {
         factManager.deleteAll();
         observationManger.deleteAll();
         sensorManager.deleteAll();
-         userManger.deleteAll();
+        userManger.deleteAll();
         organizationManager.deleteAll();
        
     }

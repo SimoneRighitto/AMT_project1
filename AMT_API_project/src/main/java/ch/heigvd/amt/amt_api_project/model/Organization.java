@@ -37,13 +37,13 @@ public class Organization implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    @OneToMany(mappedBy = "organizationOwner", orphanRemoval=true)
+    @OneToMany(mappedBy = "organizationOwner")
     private List<Sensor> sensors = new ArrayList<>();
-    @OneToMany(mappedBy = "organization", orphanRemoval=true)
+    @OneToMany(mappedBy = "organization")
     private List<User> users = new ArrayList<>();
     @OneToOne(orphanRemoval=true)
     private User contactUser;
-    @OneToMany(mappedBy = "organizationOwner", orphanRemoval=true)
+    @OneToMany(mappedBy = "organizationOwner")
     private List<Fact> facts = new ArrayList<>();
 
     public Organization() {
