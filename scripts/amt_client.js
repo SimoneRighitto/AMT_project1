@@ -5,7 +5,7 @@
  
  fact == account 
  observation == transaction  //sur les observation il y a pas de concurrence
-NOT FORGET TO CALL http://localhost:8080/AMT_API_project/api/v1/data/generate
+
  */
 
 var Client = require('node-rest-client').Client;
@@ -110,17 +110,28 @@ for (var fact=1; fact<=2; fact++) {
 /*
  * Reset server side - this will delete all facts
  */
-/* 
+
 function resetServerState(callback) {
 	console.log("\n\n==========================================");
 	console.log("POSTing RESET command.");
 	console.log("------------------------------------------");
-	client.post("http://localhost:8080/ConcurrentUpdateDemo/api/operations/reset", function(data, response) {
+	client.post("http://localhost:8080/AMT_API_project/api/v1/data/reset", function(data, response) {
 		console.log("RESET response status code: " + response.statusCode);
 		callback(null, "The RESET operation has been processed (status code: " + response.statusCode + ")");
 	});
 };
-*/
+
+function generateData(callback){
+	console.log("\n\n==========================================");
+	console.log("Get to GENERATE command.");
+	console.log("------------------------------------------");
+	client.get("http://localhost:8080/AMT_API_project/api/v1/data/generate", function(data, response) {
+		console.log("GENERATE response status code: " + response.statusCode);
+		callback(null, "The GENERATE operation has been processed (status code: " + response.statusCode + ")");
+	});
+	
+};
+
 
 /*
  * POST observation requests in parallel
@@ -211,14 +222,15 @@ function checkValues(callback) {
 }
 
 async.series([
-	//resetServerState,
+	resetServerState,
+	generateData,
 	postObservationRequestsInParallel,
 	checkValues
 ], function(err, results) {
 	console.log("\n\n==========================================");
 	console.log("Summary");
 	console.log("------------------------------------------");
-	//console.log(err);
+	console.log(err);
 	console.log(results);
 });
 
