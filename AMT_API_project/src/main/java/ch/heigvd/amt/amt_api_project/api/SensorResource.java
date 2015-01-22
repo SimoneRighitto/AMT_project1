@@ -5,9 +5,13 @@
 package ch.heigvd.amt.amt_api_project.api;
 
 import ch.heigvd.amt.amt_api_project.dto.SensorDTO;
+import ch.heigvd.amt.amt_api_project.dto.UserDTO;
 import ch.heigvd.amt.amt_api_project.model.Sensor;
+import ch.heigvd.amt.amt_api_project.model.User;
 import ch.heigvd.amt.amt_api_project.services.OrganizationManagerLocal;
 import ch.heigvd.amt.amt_api_project.services.SensorsManagerLocal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -41,6 +45,21 @@ public class SensorResource {
     public SensorResource() {
 
     }
+    
+    @GET
+    @Produces("application/json")
+    public List<SensorDTO> getAllSensors() {
+
+        List<Sensor> sensors = sensorsManager.findAllSensors();
+        List<SensorDTO> result = new ArrayList<>();
+
+        for (Sensor s : sensors) {
+            result.add(toDTO(s));
+        }
+
+        return result;
+    }
+    
 
     @Path("/{id}")
     @GET

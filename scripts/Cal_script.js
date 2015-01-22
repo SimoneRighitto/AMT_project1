@@ -1,11 +1,11 @@
 /*
  * Developped for study purposes at Heig-VD.ch
  * Created: 20-nov-2014
- * Authors: Simone Righitto, StÃ©phane Maillard
- 
- fact == account 
- observation == transaction  //sur les observation il y a pas de concurrence
+ * Authors: Calixte Melly & Fr?d?ric Saam
 
+ 
+ /!\ Ne pas oublier de lancer l'entrée /amtProject/v1/api/generate AVANT de lancer ce script.
+ 
  */
 
 var Client = require('node-rest-client').Client;
@@ -16,16 +16,16 @@ var async = require('async');
 // even if they result in an error (for instance if two parallel requests try to create a new fact).
 // In this case, the client is informed that the observation has failed and it would be his responsibility
 // to retry.
-var submittedStats = {}
-var submittedDailyStats = {}
+var submittedStats = {};
+var submittedDailyStats = {};
 
 // This map keeps track of the observations posted by the client, but only if the server has confirmed
 // their processing with a successful status code. 
 // In this case, the client can assume that the observation has been successfully processed.
 var processedStats = {};
-var processedDailyStats = {}
+var processedDailyStats = {};
 
-var workingSensorId = 0;
+var sensorIdGlobal = 0;
 
 function getSensorId(callback) {
 	console.log("\n\n==========================================");
@@ -37,28 +37,26 @@ function getSensorId(callback) {
 		}
 	};
 	client.get("http://localhost:8080/AMT_API_project/api/v1/sensors", requestData, function(data, response) {
-		workingSensorId = data[0].id;
-		console.log("working ID : " +workingSensorId);
+		sensorIdGlobal = data[0].id;
 		console.log("GETSENSORID response status code: " + response.statusCode);
 		callback(null, "The GETSENSORID operation has been processed (status code: " + response.statusCode + ")");
 	});
 }
 
-
 function logObservation(stats, observation) {
-	var factStats = stats[observation.sourceSensorId] || {
-		sourceSensorId: observation.sourceSensorId,
-		numberOfObservations: 0,
+	var factStats = stats[observation.sensorId] || {
+		sensorId: observation.sensorId,
+		numberOfObservations: 0
 		};
 	factStats.numberOfObservations += 1;
-	stats[observation.sourceSensorId] = factStats;
+	stats[observation.sensorId] = factStats;
 }
 
 function logDailyObservation(stats, observation) {
-	var key = "k" + observation.sourceSensorId +":"+ observation.time.substring(0,10); 
+	var key = "k" + observation.sensorId +":"+ observation.time.substring(0,10); 
 	//console.log(key);
 	var factStats = stats[key] || {
-		sourceSensorId: observation.sourceSensorId,
+		sensorId: observation.sensorId,
 		numberOfObservations: 0,
 		averageValue : 0,
 		minValue : 0,
@@ -66,7 +64,7 @@ function logDailyObservation(stats, observation) {
 		
 		};
 	factStats.numberOfObservations += 1;
-	factStats.averageValue += observation.value;
+	factStats.averageValue += observation.value; 
 	if(observation.value < factStats.minValue){
 		factStats.minValue= observation.value;
 	}
@@ -80,7 +78,7 @@ function logDailyObservation(stats, observation) {
 /*
  * This function returns a function that we can use with the async.js library. 
  */ 
-function getObservationPOSTRequestFunction(sourceSensorId) {
+function getObservationPOSTRequestFunction(sensorId) {
 		
 	return function(callback) {
 		var requestData = {
@@ -89,16 +87,14 @@ function getObservationPOSTRequestFunction(sourceSensorId) {
 			},
 			data: {
 				'time' : new Date().toJSON(),
-				'value': 0,
-				'sourceSensorId' : workingSensorId 
+		
+				'value': Math.floor((Math.random() * 200) - 50),
+				'sensorId' :  sensorIdGlobal
 			}
 		};
 		
-		requestData.data.value = Math.floor((Math.random() * 200) - 50);
-		//randomize data
 		logObservation(submittedStats, requestData.data);
 		logDailyObservation(submittedDailyStats, requestData.data);
-		
 		
 		client.post("http://localhost:8080/AMT_API_project/api/v1/observations", requestData, function(data, response) {
 			var error = null;
@@ -125,32 +121,33 @@ for (var fact=1; fact<=2; fact++) {
 	}
 };
 
-
 /*
- * Reset server side - this will delete all facts
+ * Reset server side - this will delete all data
  */
+ 
 
 function resetServerState(callback) {
-	console.log("\n\n==========================================");
-	console.log("POSTing RESET command.");
-	console.log("------------------------------------------");
-	client.post("http://localhost:8080/AMT_API_project/api/v1/data/reset", function(data, response) {
-		console.log("RESET response status code: " + response.statusCode);
-		callback(null, "The RESET operation has been processed (status code: " + response.statusCode + ")");
-	});
+    console.log("\n\n==========================================");
+    console.log("POSTing RESET command.");
+    console.log("------------------------------------------");
+    client.post("http://localhost:8080/AMT_API_project/api/v1/data/reset", function(data, response) {
+        console.log("RESET response status code: " + response.statusCode);
+        callback(null, "The RESET operation has been processed (status code: " + response.statusCode + ")");
+    });
 };
 
-function generateData(callback){
-	console.log("\n\n==========================================");
-	console.log("Get to GENERATE command.");
-	console.log("------------------------------------------");
-	client.get("http://localhost:8080/AMT_API_project/api/v1/data/generate", function(data, response) {
-		console.log("GENERATE response status code: " + response.statusCode);
-		callback(null, "The GENERATE operation has been processed (status code: " + response.statusCode + ")");
-	});
-	
+/*
+ * generate server side - this will generate all data
+ */
+function generateServerState(callback) {
+    console.log("\n\n==========================================");
+    console.log("GETing GENERATE command.");
+    console.log("------------------------------------------");
+    client.get("http://localhost:8080/AMT_API_project/api/v1/data/generate", function(data, response) {
+        console.log("GENERATE response status code: " + response.statusCode);
+        callback(null, "The GENERATE operation has been processed (status code: " + response.statusCode + ")");
+    });
 };
-
 
 /*
  * POST observation requests in parallel
@@ -167,7 +164,7 @@ function postObservationRequestsInParallel(callback) {
 				numberOfUnsuccessfulResponses++;
 			} else {
 				logObservation(processedStats, results[i].requestData.data);
-				logDailyObservation(processedDailyStats, results[i].requestData.data);
+				logDailyObservation(processedDailyStats,results[i].requestData.data);
 			}
 		}
 		callback(null, results.length + " observation POSTs have been sent. " + numberOfUnsuccessfulResponses + " have failed.");
@@ -193,9 +190,9 @@ function checkValues(callback) {
 		var clientSideDailyFacts = Object.keys(submittedDailyStats).length;
 		var clientSideFacts = clientSideCounterFacts+clientSideDailyFacts;
 		var serverSideFacts = data.length;
-		var serverSideCounterFacts = 0;
-		var serverSideDailyFacts = 0;
-		
+
+
+
 		console.log("Number of facts on the client side: " + clientSideFacts);
 		console.log("Number of facts on the server side: " + serverSideFacts);
 		if ( clientSideFacts !== serverSideFacts) {
@@ -204,36 +201,35 @@ function checkValues(callback) {
 		
 		for (var i=0; i<data.length; i++) {
 	
-			var factSourceSensorId = data[i].sensorId;
+			var factSensorId = data[i].sensorId;
 			var factType = data[i].type;
-			var factDayDate = data[i].dayDate;
-			var factInfo = data[i].infos;
+			var factDayDate = data[i].time;
+			var factInfo = data[i].info;
 			
-			if(factType == "counter"){
-				var serverSideNumberOfObservations = factInfo[0];
-				var clientSideNumberOfObservations = processedStats[factSourceSensorId].numberOfObservations;
-				if (serverSideNumberOfObservations !== clientSideNumberOfObservations) {
-				numberOfErrors++;
-				console.log("Sensor " + factSourceSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations + "  X");
-				} else {
-				//console.log("Sensor " + factSourceSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations");
-				console.log("serverSideNumberOfObservations equals to clientSideNumberOfObservations");
-				}
+			if(factType === "counter"){
+				var serverSideNumberOfObservations = (factInfo[0])-1; // Nous enlevons 1 car /amtProject/v1/api/generate créée une observation avant ce script
+				var clientSideNumberOfObservations = processedStats[factSensorId];
+				console.log("Number of observation on the client side: " + clientSideNumberOfObservations.numberOfObservations);
+				console.log("Number of observation on the server side: " + serverSideNumberOfObservations);
+				if (serverSideNumberOfObservations !== clientSideNumberOfObservations.numberOfObservations) {
+					numberOfErrors++;
+					console.log("Sensor " + factSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations.numberOfObservations + "  X");
+				} 
 			}
-			else if(factType == "daily"){
-			
-			
-			//
-			//TO DO
-			//
-			//
-			
+			else if(factType === "daily"){
+
+
+				var key = "k" + factSensorId +":"+ factDayDate.substring(0,10);
+
+				console.log("Min sur le client : "+ (processedDailyStats[key]).minValue + " et sur le serveur : " + factInfo[0]);
+				console.log("Max sur le client : "+ (processedDailyStats[key]).maxValue + " et sur le serveur : " + factInfo[1]);
+				
+				// Les valeurs ajoutées sont présentes car une observation est déjà sur le serveur au moment de lancer ce script
+				console.log("Avg sur le client : "+ ((processedDailyStats[key]).averageValue + 25) / (processedDailyStats[key].numberOfObservations + 1) + " et sur le serveur : " + factInfo[2]);
 			}
 			else{
 				consol.log("Error : unknown fact type");
 			}
-			
-		
 			
 		}
 		
@@ -243,7 +239,7 @@ function checkValues(callback) {
 
 async.series([
 	resetServerState,
-	generateData,
+    generateServerState,
 	getSensorId,
 	postObservationRequestsInParallel,
 	checkValues
@@ -251,7 +247,7 @@ async.series([
 	console.log("\n\n==========================================");
 	console.log("Summary");
 	console.log("------------------------------------------");
-	console.log(err);
+	//console.log(err);
 	console.log(results);
 });
 

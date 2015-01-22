@@ -2,7 +2,6 @@
  * Developped for study purposes at Heig-VD.ch
  * Created: 20-nov-2014
  */
-
 package ch.heigvd.amt.amt_api_project.model;
 
 import java.io.Serializable;
@@ -19,12 +18,13 @@ import javax.persistence.Table;
  *
  * @author Simone Righitto
  */
-@Table(name="sensor")
+@Table(name = "sensor")
 
 @NamedQueries(
         {
-            
-            @NamedQuery(name="Sensor.deleteAll", query="DELETE FROM Sensor")
+            @NamedQuery(
+                    name = "findAllSensors", query = "SELECT s FROM Sensor s"),
+            @NamedQuery(name = "Sensor.deleteAll", query = "DELETE FROM Sensor")
         }
 )
 
@@ -33,7 +33,6 @@ public class Sensor implements Serializable {
 
 //    @EJB
 //    private OrganizationManagerLocal organizationManager;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -47,8 +46,8 @@ public class Sensor implements Serializable {
     public Sensor() {
     }
 
-    public Sensor( String name, String description, String type, String visibility, Organization organizationOwner) {
-      
+    public Sensor(String name, String description, String type, String visibility, Organization organizationOwner) {
+
         this.name = name;
         this.description = description;
         this.type = type;
@@ -104,6 +103,4 @@ public class Sensor implements Serializable {
         this.organizationOwner = organizationOwner;
     }
 
-   
-    
 }

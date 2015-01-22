@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  *
@@ -53,6 +54,9 @@ public class Fact implements Serializable {
     private Sensor sensor;
     @Temporal(TemporalType.DATE)
     private Date dayDate;
+    
+    @Version
+    int version;
 
     public Fact() {
     }

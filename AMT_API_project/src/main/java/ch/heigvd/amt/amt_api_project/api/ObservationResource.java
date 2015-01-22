@@ -16,6 +16,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -26,20 +27,20 @@ import javax.ws.rs.core.UriInfo;
 @Path("observations")
 @Stateless
 public class ObservationResource {
-    
+
     @EJB
     private ObservationsManagerLocal observationManager;
-    
+
     @EJB
     SensorsManagerLocal sensorsManager;
-    
+
     @Context
     private UriInfo context;
-    
+
     public ObservationResource() {
-        
+
     }
-    
+
     @Path("/{id}")
     @GET
     @Produces("application/json")
@@ -50,14 +51,29 @@ public class ObservationResource {
     @POST
     @Consumes("application/json")
     public long createObservation(ObservationDTO dtoObservation) {
+        
         Observation newObservation = new Observation();
-        long id = observationManager.createObservation(toObservation(dtoObservation, newObservation));
-        return id;
-       
+        int numberOfAttempts = 100;
+ 
+        
+        while (numberOfAttempts > 0) {
+            try {
+                numberOfAttempts--;
+                long id = observationManager.createObservation(toObservation(dtoObservation, newObservation));
+                
+                return id;
+            } catch (Exception e) {
+                System.out.println("OptimisticLockException : remaining attempts: " + numberOfAttempts);
+                try {
+                    Thread.sleep((long) Math.random() * 200);
+                } catch (InterruptedException ex) {
+                    System.out.println("Interrupted Exception : "+ ex.getStackTrace());
+                }
+            }
+        }
+        throw new WebApplicationException("ERROR: concurrente update");
     }
-    
-    
-    
+
     /*
      * Conversion utility methods
      */
@@ -66,19 +82,18 @@ public class ObservationResource {
         originalObservation.setObservedAt(dtoObservation.getTime());
         originalObservation.setObservedValue(dtoObservation.getValue());
         originalObservation.setSourceSensor(sensorsManager.findSensorByID(dtoObservation.getSourceSensorId()));
-     
-        
+
         return originalObservation;
     }
 
     private ObservationDTO toDTO(Observation observation) {
-        ObservationDTO dtoObservation =  new ObservationDTO();
+        ObservationDTO dtoObservation = new ObservationDTO();
         dtoObservation.setId(observation.getId());
         dtoObservation.setTime(observation.getObservedAt());
         dtoObservation.setValue(observation.getObservedValue());
         dtoObservation.setSourceSensorId(observation.getSourceSensor().getId());
-        
+
         return dtoObservation;
     }
-    
+
 }

@@ -5,6 +5,7 @@
 package ch.heigvd.amt.amt_api_project.services;
 
 import ch.heigvd.amt.amt_api_project.model.Sensor;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -54,5 +55,10 @@ public class SensorsManager implements SensorsManagerLocal {
     public void deleteAll() {
         Query query = em.createNamedQuery("Sensor.deleteAll");
         query.executeUpdate();
+    }
+
+    @Override
+    public List<Sensor> findAllSensors() {
+        return em.createNamedQuery("findAllSensors").getResultList();
     }
 }

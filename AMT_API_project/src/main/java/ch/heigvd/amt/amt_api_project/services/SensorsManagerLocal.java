@@ -5,6 +5,7 @@
 package ch.heigvd.amt.amt_api_project.services;
 
 import ch.heigvd.amt.amt_api_project.model.Sensor;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -13,6 +14,8 @@ import javax.ejb.Local;
  */
 @Local
 public interface SensorsManagerLocal {
+    
+    public List<Sensor> findAllSensors();
     
     public Sensor findSensorByID(long id);
 

@@ -64,49 +64,49 @@ public class TestDataManager implements TestDataManagerLocal {
         }
 
         //finally let's generate some observations:
-        Date d = new Date(); //just for test we let the date empty
-        Random r = new Random();
-        double randomValue;
-        int randomNbrOfObservations;
-        for (Long s : heigVdSensors) {
-            randomNbrOfObservations = r.nextInt(5);
-            for (int i = 0; i < randomNbrOfObservations; i++) {
-                randomValue = -15 + (40 - 15) * r.nextDouble();
-                observationManger.createObservation(new Observation(d, randomValue, sensorManager.findSensorByID(s)));
-            }
-        }
+//        Date d = new Date(); //just for test we let the date empty
+//        Random r = new Random();
+//        double randomValue;
+//        int randomNbrOfObservations;
+//        for (Long s : heigVdSensors) {
+//            randomNbrOfObservations = r.nextInt(5);
+//            for (int i = 0; i < randomNbrOfObservations; i++) {
+//                randomValue = -15 + (40 - 15) * r.nextDouble();
+//                observationManger.createObservation(new Observation(d, randomValue, sensorManager.findSensorByID(s)));
+//            }
+//        }
 
-        /**
-         * Police organization test
-         */
-        // Let's create a second test organization
-        Organization policeVd = new Organization("policeVd");
-        long policeVdId = organizationManager.createOrganization(policeVd);
-
-        //now let's create some users for the organizations:
-        List<Long> policeVdUsers = new ArrayList();
-        for (int i = 0; i < 10; i++) {
-            policeVdUsers.add(userManger.createUser(new User("officer" + i, "officer" + i, "officer" + i + "@policeVd.com", policeVd, false)));
-
-        }
-
-        User policeVdContactUser = userManger.findUserByID(policeVdUsers.get(0));
-        policeVdContactUser.setIsContact(true);
-        userManger.updateUser(policeVdContactUser);
-        policeVd.setContactUser(policeVdContactUser);
-        organizationManager.updateOrganization(policeVd);
-
-        //We create some sensors for our organization:
-        List<Long> policeVdSensors = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            policeVdSensors.add(sensorManager.createSensor(new Sensor("r" + i, "radar" + i, "speed", "private", policeVd)));
-        }
-
-        //Just flashing some people on the highway ;-)
-        Observation o1 = new Observation(d, 150.0, sensorManager.findSensorByID(policeVdSensors.get(0)));
-        Observation o2 = new Observation(d, 180.0, sensorManager.findSensorByID(policeVdSensors.get(0)));
-        observationManger.createObservation(o1);
-        observationManger.createObservation(o2);
+//        /**
+//         * Police organization test
+//         */
+//        // Let's create a second test organization
+//        Organization policeVd = new Organization("policeVd");
+//        long policeVdId = organizationManager.createOrganization(policeVd);
+//
+//        //now let's create some users for the organizations:
+//        List<Long> policeVdUsers = new ArrayList();
+//        for (int i = 0; i < 10; i++) {
+//            policeVdUsers.add(userManger.createUser(new User("officer" + i, "officer" + i, "officer" + i + "@policeVd.com", policeVd, false)));
+//
+//        }
+//
+//        User policeVdContactUser = userManger.findUserByID(policeVdUsers.get(0));
+//        policeVdContactUser.setIsContact(true);
+//        userManger.updateUser(policeVdContactUser);
+//        policeVd.setContactUser(policeVdContactUser);
+//        organizationManager.updateOrganization(policeVd);
+//
+//        //We create some sensors for our organization:
+//        List<Long> policeVdSensors = new ArrayList<>();
+//        for (int i = 0; i < 50; i++) {
+//            policeVdSensors.add(sensorManager.createSensor(new Sensor("r" + i, "radar" + i, "speed", "private", policeVd)));
+//        }
+//
+//        //Just flashing some people on the highway ;-)
+////        Observation o1 = new Observation(d, 150.0, sensorManager.findSensorByID(policeVdSensors.get(0)));
+////        Observation o2 = new Observation(d, 180.0, sensorManager.findSensorByID(policeVdSensors.get(0)));
+////        observationManger.createObservation(o1);
+////        observationManger.createObservation(o2);
     }
 
     @Override
@@ -125,6 +125,7 @@ public class TestDataManager implements TestDataManagerLocal {
         
         userManger.deleteAll();
         organizationManager.deleteAll();
+        
         
        
     }
