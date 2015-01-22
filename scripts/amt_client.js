@@ -114,7 +114,7 @@ function getObservationPOSTRequestFunction(sourceSensorId) {
 var requests = [];
 
 for (var fact=1; fact<=1; fact++) {
-	for (var observation=0; observation<1; observation++) {
+	for (var observation=0; observation<10; observation++) {
 		requests.push(
 			getObservationPOSTRequestFunction(fact)
 		);
@@ -210,10 +210,9 @@ function checkValues(callback) {
 				var clientSideNumberOfObservations = processedStats[factSourceSensorId].numberOfObservations;
 				if (serverSideNumberOfObservations !== clientSideNumberOfObservations) {
 				numberOfErrors++;
-				console.log("CounterFact problem: Sensor " + factSourceSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations + "  X");
+				console.log("CounterFact Problem: Sensor " + factSourceSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations + "  X");
 				} else {
-				//console.log("Sensor " + factSourceSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations");
-				console.log("serverSideNumberOfObservations equals to clientSideNumberOfObservations");
+				console.log("CounterFact for Sensor " + factSourceSensorId  + " OK ! ");
 				}
 			}
 			else if(factType == "daily"){
@@ -224,13 +223,20 @@ function checkValues(callback) {
 				var serverSideMaxValue= factInfo[1];
 				var serverSideAvgValue= factInfo[2];
 			
+				var clientSideMinValue=(processedDailyStats[key]).minValue;
+				var clientSideMaxValue=(processedDailyStats[key]).maxValue;
+				var clientSideAvgValue=((processedDailyStats[key]).averageValue) / (processedDailyStats[key].numberOfObservations);
 				
-				console.log("Min sur le client : "+ (processedDailyStats[key]).minValue + " et sur le serveur : " + factInfo[0]);
-				console.log("Max sur le client : "+ (processedDailyStats[key]).maxValue + " et sur le serveur : " + factInfo[1]);
-				
-				
-				console.log("Avg sur le client : "+ ((processedDailyStats[key]).averageValue) / (processedDailyStats[key].numberOfObservations) + " et sur le serveur : " + factInfo[2]);
-			
+				if(clientSideMinValue !== serverSideMinValue || clientSideMaxValue !== serverSideMaxValue || clientSideAvgValue!==serverSideAvgValue){
+					console.log("DailyFact Problem:\n");
+					console.log("Min sur le client : "+ clientSideMinValue + " et sur le serveur : " + serverSideMinValue);
+					console.log("Max sur le client : "+ clientSideMaxValue + " et sur le serveur : " + serverSideMaxValue);
+					console.log("Avg sur le client : "+  clientSideAvgValue+ " et sur le serveur : " + serverSideAvgValue);
+				}
+				else{
+				console.log("DailyFact for Sensor " + factSourceSensorId  + " OK ! ");
+				}
+
 			}
 			else{
 				consol.log("Error : unknown fact type");
