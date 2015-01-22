@@ -2,10 +2,6 @@
  * Developped for study purposes at Heig-VD.ch
  * Created: 20-nov-2014
  * Authors: Simone Righitto, Stéphane Maillard
- 
- fact == account 
- observation == transaction  //sur les observation il y a pas de concurrence
-
  */
 
 var Client = require('node-rest-client').Client;
@@ -63,8 +59,8 @@ function logDailyObservation(stats, observation) {
 		sourceSensorId: observation.sourceSensorId,
 		numberOfObservations: 0,
 		averageValue : 0,
-		minValue : 0,
-		maxValue : 0
+		minValue : observation.value,
+		maxValue : observation.value
 		
 		};
 	factStats.numberOfObservations += 1;
@@ -96,7 +92,6 @@ function getObservationPOSTRequestFunction(sourceSensorId) {
 				'sourceSensorId' : workingSensorId 
 			}
 		};
-	
 		logObservation(submittedStats, requestData.data);
 		logDailyObservation(submittedDailyStats, requestData.data);
 		
@@ -118,7 +113,7 @@ function getObservationPOSTRequestFunction(sourceSensorId) {
  */
 var requests = [];
 
-for (var fact=1; fact<=2; fact++) {
+for (var fact=1; fact<=1; fact++) {
 	for (var observation=0; observation<1; observation++) {
 		requests.push(
 			getObservationPOSTRequestFunction(fact)
@@ -215,7 +210,7 @@ function checkValues(callback) {
 				var clientSideNumberOfObservations = processedStats[factSourceSensorId].numberOfObservations;
 				if (serverSideNumberOfObservations !== clientSideNumberOfObservations) {
 				numberOfErrors++;
-				console.log("Sensor " + factSourceSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations + "  X");
+				console.log("CounterFact problem: Sensor " + factSourceSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations + "  X");
 				} else {
 				//console.log("Sensor " + factSourceSensorId + " --> Server/Client number of observations: " + serverSideNumberOfObservations + "/" + clientSideNumberOfObservations");
 				console.log("serverSideNumberOfObservations equals to clientSideNumberOfObservations");
@@ -224,13 +219,17 @@ function checkValues(callback) {
 			else if(factType == "daily"){
 			
 			var key = "k" + factSourceSensorId +":"+ factDayDate.substring(0,10);
+				
+				var serverSideMinValue=factInfo[0];
+				var serverSideMaxValue= factInfo[1];
+				var serverSideAvgValue= factInfo[2];
 			
-			
+				
 				console.log("Min sur le client : "+ (processedDailyStats[key]).minValue + " et sur le serveur : " + factInfo[0]);
 				console.log("Max sur le client : "+ (processedDailyStats[key]).maxValue + " et sur le serveur : " + factInfo[1]);
 				
-				// Les valeurs ajoutées sont présentes car une observation est déjà sur le serveur au moment de lancer ce script
-				console.log("Avg sur le client : "+ ((processedDailyStats[key]).averageValue + 25) / (processedDailyStats[key].numberOfObservations + 1) + " et sur le serveur : " + factInfo[2]);
+				
+				console.log("Avg sur le client : "+ ((processedDailyStats[key]).averageValue) / (processedDailyStats[key].numberOfObservations) + " et sur le serveur : " + factInfo[2]);
 			
 			}
 			else{

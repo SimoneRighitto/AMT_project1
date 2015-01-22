@@ -114,7 +114,7 @@ function getObservationPOSTRequestFunction(sensorId) {
 var requests = [];
 
 for (var fact=1; fact<=2; fact++) {
-	for (var observation=0; observation<60; observation++) {
+	for (var observation=0; observation<2; observation++) {
 		requests.push(
 			getObservationPOSTRequestFunction(fact)
 		);
