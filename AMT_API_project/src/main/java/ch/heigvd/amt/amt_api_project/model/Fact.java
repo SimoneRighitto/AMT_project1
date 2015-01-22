@@ -57,7 +57,7 @@ public class Fact implements Serializable {
     private Date dayDate;
     
     @Version
-    int version;
+    long version;
 
     public Fact() {
     }

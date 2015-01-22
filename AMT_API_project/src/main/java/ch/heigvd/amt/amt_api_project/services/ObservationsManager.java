@@ -81,13 +81,13 @@ public class ObservationsManager implements ObservationsManagerLocal {
             List<Double> newValue = new ArrayList<>();
             Double min = oldValue.get(0);
             Double max = oldValue.get(1);
-            Double avg = oldValue.get(2);
+            
             if (observation.getObservedValue() < min) {
                 min = observation.getObservedValue();
             } else if (observation.getObservedValue() > max) {
                 max = observation.getObservedValue();
             }
-            avg = findAverageObservationByDay(observation.getSourceSensor().getId());
+            Double avg = findAverageObservationByDay(observation.getSourceSensor().getId());
             newValue.add(min);
             newValue.add(max);
             newValue.add(avg);
