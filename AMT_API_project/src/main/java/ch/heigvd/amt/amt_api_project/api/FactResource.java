@@ -104,7 +104,8 @@ public class FactResource {
 
         originalFact.setDayDate(dtoFact.getDayDate());
 
-        originalFact.setInfos(parseInfos(dtoFact.getInfos()));
+        //originalFact.setInfos(parseInfos(dtoFact.getInfos()));
+        originalFact.setInfos(dtoFact.getInfos());
 
         originalFact.setSensor(sensorManager.findSensorByID(dtoFact.getSensorId()));
 
@@ -120,8 +121,8 @@ public class FactResource {
 
         dtoFact.setDayDate(fact.getDayDate());
 
-        dtoFact.setInfos(serializeInfos(fact.getInfos()));
-
+//        dtoFact.setInfos(serializeInfos(fact.getInfos()));
+        dtoFact.setInfos(fact.getInfos());
         dtoFact.setSensorId(fact.getSensor().getId());
 
         return dtoFact;

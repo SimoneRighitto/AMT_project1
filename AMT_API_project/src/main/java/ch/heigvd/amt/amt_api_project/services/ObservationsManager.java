@@ -7,9 +7,11 @@ package ch.heigvd.amt.amt_api_project.services;
 import ch.heigvd.amt.amt_api_project.model.Fact;
 import ch.heigvd.amt.amt_api_project.model.Observation;
 import ch.heigvd.amt.amt_api_project.model.Sensor;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -50,54 +52,56 @@ public class ObservationsManager implements ObservationsManagerLocal {
 
         //managing the CounterFacts
         Fact counterFact = factManager.findFactBySensorIdAndType(sourceSensor.getId(), "counter");
-        
+
         if (counterFact != null) {
             //only update
-            HashMap<String, Double> counterInfos = counterFact.getInfos();
-            double counter = counterInfos.get("obsCounter");
+            List<Double> counterInfos = counterFact.getInfos();
+            double counter = counterInfos.get(0);
             counter++;
-            counterInfos.put("obsCounter", counter);
+            counterInfos.set(0, counter);
             counterFact.setInfos(counterInfos);
 
             factManager.updateFact(counterFact);
 
         } else {
             //create a new CounterFact
-            HashMap<String, Double> counterInfos = new HashMap();
-            counterInfos.put("obsCounter", 1.0);
-            counterFact = new Fact("counter", sourceSensor.getVisibility(), sourceSensor.getOrganizationOwner(), sourceSensor, new Date());
+            List<Double> counterInfos = new ArrayList<>();
+            counterInfos.add(1.0);
+            counterFact = new Fact("counter", sourceSensor.getVisibility(), sourceSensor.getOrganizationOwner(), sourceSensor, observation.getObservedAt());
             counterFact.setInfos(counterInfos);
 
             factManager.createFact(counterFact);
         }
 
         //managing DailyFacts
-        Fact dailyFact = factManager.findFactBySensorIdAndTypeAndDate(sourceSensor.getId(), "daily", new Date());
+        Fact dailyFact = factManager.findFactBySensorIdAndTypeAndDate(sourceSensor.getId(), "daily", observation.getObservedAt());
         if (dailyFact != null) {
             //only update
-            HashMap<String, Double> dailyInfos = dailyFact.getInfos();
-            double oldMin = dailyInfos.get("min");
-            double oldMax = dailyInfos.get("max");
-            
-
-            double newValue = observation.getObservedValue();
-
-            dailyInfos.put("min", (oldMin < newValue) ? oldMin : newValue);
-            dailyInfos.put("max", (newValue > oldMax) ? newValue : oldMax);
-            dailyInfos.put("avg", findAverageObservationByDay(sourceSensor.getId()));
-           
-            
-            dailyFact.setInfos(dailyInfos);
-            factManager.updateFact(dailyFact);
+            List<Double> oldValue = dailyFact.getInfos();
+            List<Double> newValue = new ArrayList<>();
+            Double min = oldValue.get(0);
+            Double max = oldValue.get(1);
+            Double avg = oldValue.get(2);
+            if (observation.getObservedValue() < min) {
+                min = observation.getObservedValue();
+            } else if (observation.getObservedValue() > max) {
+                max = observation.getObservedValue();
+            }
+            avg = findAverageObservationByDay(observation.getSourceSensor().getId());
+            newValue.add(min);
+            newValue.add(max);
+            newValue.add(avg);
+            dailyFact.setInfos(newValue);
 
         } else {
             //create a new DailyFact
-            HashMap<String, Double> dailyInfos = new HashMap();
             //as it's a new dailyFact, min, max and avg values are the same
-            dailyInfos.put("min", observation.getObservedValue());
-            dailyInfos.put("max", observation.getObservedValue());
-            dailyInfos.put("avg", observation.getObservedValue());
-            dailyFact = new Fact("daily", sourceSensor.getVisibility(), sourceSensor.getOrganizationOwner(), sourceSensor, new Date());
+            List<Double> dailyInfos = new ArrayList<>();
+            dailyInfos.add(observation.getObservedValue()); 
+            dailyInfos.add(observation.getObservedValue()); 
+            dailyInfos.add(observation.getObservedValue()); 
+            
+            dailyFact = new Fact("daily", sourceSensor.getVisibility(), sourceSensor.getOrganizationOwner(), sourceSensor, observation.getObservedAt());
             dailyFact.setInfos(dailyInfos);
             factManager.createFact(dailyFact);
         }
@@ -112,8 +116,8 @@ public class ObservationsManager implements ObservationsManagerLocal {
         Date end = getEndOfDay(new Date());
         return (Double) em.createNamedQuery("findAverageObservationByDay").setParameter("sensorId", sensorId).setParameter("start", start, TemporalType.TIMESTAMP).setParameter("end", end, TemporalType.TIMESTAMP).getSingleResult();
     }
-    
-        @Override
+
+    @Override
     public void deleteAll() {
         Query query = em.createNamedQuery("Observation.deleteAll");
         query.executeUpdate();

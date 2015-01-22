@@ -6,6 +6,7 @@ package ch.heigvd.amt.amt_api_project.dto;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -18,7 +19,7 @@ public class FactDTO {
     private String visibility;
     private long organizationOwnerId;
 
-    private String infos;
+    private List<Double> infos;
     private long sensorId;
     private Date dayDate;
 
@@ -65,11 +66,11 @@ public class FactDTO {
         this.organizationOwnerId = organizationOwnerId;
     }
 
-    public String getInfos() {
+    public List<Double> getInfos() {
         return infos;
     }
 
-    public void setInfos(String infos) {
+    public void setInfos(List<Double> infos) {
         this.infos = infos;
     }
 

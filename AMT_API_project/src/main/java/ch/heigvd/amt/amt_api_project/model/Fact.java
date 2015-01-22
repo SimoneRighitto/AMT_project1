@@ -7,6 +7,7 @@ package ch.heigvd.amt.amt_api_project.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,7 +50,7 @@ public class Fact implements Serializable {
     @ManyToOne
     private Organization organizationOwner;
     
-    private HashMap infos;
+    private List<Double> infos;
     @ManyToOne
     private Sensor sensor;
     @Temporal(TemporalType.DATE)
@@ -109,11 +110,11 @@ public class Fact implements Serializable {
         this.organizationOwner = organizationOwner;
     }
 
-    public HashMap getInfos() {
+    public List<Double> getInfos() {
         return infos;
     }
 
-    public void setInfos(HashMap infos) {
+    public void setInfos(List<Double> infos) {
         this.infos = infos;
     }
 

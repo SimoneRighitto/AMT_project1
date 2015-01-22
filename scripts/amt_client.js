@@ -11,6 +11,8 @@
 var Client = require('node-rest-client').Client;
 var client = new Client();
 var async = require('async');
+var Chance = require('chance');
+var chance = new Chance();
 
 // This map keeps track of the observations posted by the client, 
 // even if they result in an error (for instance if two parallel requests try to create a new fact).
@@ -56,7 +58,7 @@ function logObservation(stats, observation) {
 
 function logDailyObservation(stats, observation) {
 	var key = "k" + observation.sourceSensorId +":"+ observation.time.substring(0,10); 
-	//console.log(key);
+	//console.log("orig key : " + key);
 	var factStats = stats[key] || {
 		sourceSensorId: observation.sourceSensorId,
 		numberOfObservations: 0,
@@ -87,15 +89,14 @@ function getObservationPOSTRequestFunction(sourceSensorId) {
 			headers:{
 				"Content-Type": "application/json"
 			},
+			//randomized data
 			data: {
-				'time' : new Date().toJSON(),
-				'value': 0,
+				'time' : chance.date().toJSON(),
+				'value': Math.floor((Math.random() * 200) - 50),
 				'sourceSensorId' : workingSensorId 
 			}
 		};
-		
-		requestData.data.value = Math.floor((Math.random() * 200) - 50);
-		//randomize data
+	
 		logObservation(submittedStats, requestData.data);
 		logDailyObservation(submittedDailyStats, requestData.data);
 		
@@ -118,7 +119,7 @@ function getObservationPOSTRequestFunction(sourceSensorId) {
 var requests = [];
 
 for (var fact=1; fact<=2; fact++) {
-	for (var observation=0; observation<60; observation++) {
+	for (var observation=0; observation<10; observation++) {
 		requests.push(
 			getObservationPOSTRequestFunction(fact)
 		);
@@ -222,11 +223,14 @@ function checkValues(callback) {
 			}
 			else if(factType == "daily"){
 			
+			var key = "k" + factSourceSensorId +":"+ factDayDate.substring(0,10);
 			
-			//
-			//TO DO
-			//
-			//
+			
+				console.log("Min sur le client : "+ (processedDailyStats[key]).minValue + " et sur le serveur : " + factInfo[0]);
+				console.log("Max sur le client : "+ (processedDailyStats[key]).maxValue + " et sur le serveur : " + factInfo[1]);
+				
+				// Les valeurs ajoutées sont présentes car une observation est déjà sur le serveur au moment de lancer ce script
+				console.log("Avg sur le client : "+ ((processedDailyStats[key]).averageValue + 25) / (processedDailyStats[key].numberOfObservations + 1) + " et sur le serveur : " + factInfo[2]);
 			
 			}
 			else{

@@ -62,6 +62,9 @@ public class TestDataManager implements TestDataManagerLocal {
         for (int i = 0; i < 5; i++) {
             heigVdSensors.add(sensorManager.createSensor(new Sensor("s" + i, "testSensor" + i, "meteo", "public", heigVd)));
         }
+        
+//        Observation o1 = new Observation(new Date(), 150.0, sensorManager.findSensorByID(heigVdSensors.get(0)));
+//        observationManger.createObservation(o1);
 
         //finally let's generate some observations:
 //        Date d = new Date(); //just for test we let the date empty
